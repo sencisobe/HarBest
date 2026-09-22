@@ -12,20 +12,50 @@ public class Habit {
         private int dailyObjectiveTime;
         private  GrowthStage growthStage;
         private List<Water> waterHistory;
+        private int streak;
         private LocalDate creationDate;
 
     public Habit(String name, int dailyObtectiveTime){
         
         this.name = name;
         this.dailyObjectiveTime= dailyObtectiveTime;
-        this.growthStage= growthStage.SPROUT;
+        this.growthStage= GrowthStage.SPROUT;
         this.waterHistory= new ArrayList<>(); 
+        this.streak=0;
         this.creationDate= LocalDate.now();
 
     }
     public void waterRegister ( Water water){
 
         waterHistory.add(water);
-        
     }
+    // GETTERS
+public int getId() {
+    return id;
+}
+
+
+public String getName() {
+    return name;
+}
+
+public int getDailyObjectiveTime() {
+    return dailyObjectiveTime;
+}
+
+public GrowthStage getGrowthStage() {
+    return growthStage;
+}
+public int getStreak(){
+    return streak;
+}
+
+public List<Water> getWaterHistory() {
+    return List.copyOf(waterHistory);
+}
+
+public LocalDate getCreationDate() {
+    return creationDate;
+}
+
 }
