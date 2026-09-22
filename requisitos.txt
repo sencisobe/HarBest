@@ -1,0 +1,8 @@
+HarBest es una aplicacion de seguimientos de habitos. 
+
+El usuario creará un brote que representa un hábito. 
+Cada hábito tendrá su nombre y tiempo a diario a dedicar.
+Se valorará más la constancia a lo largo de los días que las horas en sí.
+Este brote se regará con tiempo dedicado al hábito.
+Con la cantidad de tiempo que se riegue dicho brote a lo largo de los días irá creciendo dicho brote.
+El brote se llegará a convertir en un árbol.
