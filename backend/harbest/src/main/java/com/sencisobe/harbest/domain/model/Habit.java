@@ -14,6 +14,7 @@ public class Habit {
         private List<Water> waterHistory;
         private int streak;
         private LocalDate creationDate;
+        private double totalExperience;
 
     public Habit(String name, int dailyObtectiveTime){
         
@@ -23,14 +24,60 @@ public class Habit {
         this.waterHistory= new ArrayList<>(); 
         this.streak=0;
         this.creationDate= LocalDate.now();
+        this.totalExperience=0;
 
     }
-    public void waterRegister ( Water water){
-        Water waterAlt= water;
-        //need to see how constancy
-        // and extreme number of hours account
-        waterHistory.add(waterAlt);
+
+    // METHODS 
+    /**
+     * Register how the habit was watered in a day and update the XP
+     * @param water Daily Water to register
+     * @param growthPoints points to sum accounting streak multiplier
+     * 
+     */
+    public void waterRegister ( Water water,double growthPoints){
+       waterHistory.add(water);
+        updateStreak(water);
+        totalExperience += growthPoints;
+        updateGrowthStage();
     }
+    
+   /**
+     * Checks if a habit changes from Stage 
+     *   7 days  for half tree and 30 days for tree
+     *  
+     */
+    private void updateGrowthStage() {
+    if (totalExperience >= dailyObjectiveTime * 30) {
+        growthStage = GrowthStage.TREE;
+    } else if (totalExperience >= dailyObjectiveTime * 7) {
+        growthStage = GrowthStage.HALF_TREE;
+    } else {
+        growthStage = GrowthStage.SPROUT;
+    }
+}
+
+
+/**
+ * Update streak , increments if it accomplish the daily objective else punish it by halfing the streak
+ * @param water Daily Water to register
+ * 
+ */
+public void updateStreak(Water water){
+    LocalDate lastWateredDate = waterHistory.size() > 1 ? waterHistory.get(waterHistory.size()-2).getDate() : null;
+    
+    boolean isConsecutiveDay = lastWateredDate != null
+        && water.getDate().equals(lastWateredDate.plusDays(1));
+
+    boolean metObjective = water.getDuration() >= dailyObjectiveTime;
+
+    
+    if (metObjective && (lastWateredDate == null || isConsecutiveDay)) {
+        streak++;
+    } else if (!metObjective) {
+        streak = streak /2 ; 
+    }
+}
     // GETTERS
 public int getId() {
     return id;
@@ -59,26 +106,8 @@ public List<Water> getWaterHistory() {
 public LocalDate getCreationDate() {
     return creationDate;
 }
-
-// METHODS 
-/**
- * Update streak , increments if it accomplish the daily objective else punish it by halfing the streak
- * @param water Daily Water to register
- * 
- */
-public void updateStreak(Water water){
-    LocalDate lastWateredDate = waterHistory.size() > 1 ? waterHistory.get(waterHistory.size()-2).getDate() : null;
-    
-    boolean isConsecutiveDay = lastWateredDate != null
-        && water.getDate().equals(lastWateredDate.plusDays(1));
-
-    boolean metObjective = water.getDuration() >= dailyObjectiveTime;
-
-    
-    if (metObjective && (lastWateredDate == null || isConsecutiveDay)) {
-        streak++;
-    } else if (!metObjective) {
-        streak = streak /2 ; 
-    }
+public double getTotalExperience(){
+    return totalExperience;
 }
+
 }
