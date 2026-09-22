@@ -9,7 +9,12 @@ public class Water {
     public Water(int duration){
         this.duration= duration;
         date= LocalDate.now();
-
-
+    }
+    public int getDuration() {
+        return duration;
+    }
+    public void setDuration(int add){
+        
+        this.duration=duration+add;
     }
 }

@@ -26,8 +26,10 @@ public class Habit {
 
     }
     public void waterRegister ( Water water){
-
-        waterHistory.add(water);
+        Water waterAlt= water;
+        //need to see how constancy
+        // and extreme number of hours account
+        waterHistory.add(waterAlt);
     }
     // GETTERS
 public int getId() {
