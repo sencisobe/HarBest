@@ -60,7 +60,25 @@ public LocalDate getCreationDate() {
     return creationDate;
 }
 
+// METHODS 
+/**
+ * Update streak , increments if it accomplish the daily objective else punish it by halfing the streak
+ * @param water Daily Water to register
+ * 
+ */
 public void updateStreak(Water water){
     LocalDate lastWateredDate = waterHistory.size() > 1 ? waterHistory.get(waterHistory.size()-2).getDate() : null;
+    
+    boolean isConsecutiveDay = lastWateredDate != null
+        && water.getDate().equals(lastWateredDate.plusDays(1));
+
+    boolean metObjective = water.getDuration() >= dailyObjectiveTime;
+
+    
+    if (metObjective && (lastWateredDate == null || isConsecutiveDay)) {
+        streak++;
+    } else if (!metObjective) {
+        streak = streak /2 ; 
+    }
 }
 }
