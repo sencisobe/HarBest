@@ -10,3 +10,6 @@ El brote se llegará a convertir en un árbol.
 Para medir la constancia hare una variable int 
 streak que es aumenta  con el numero de dias que se logra dailyObjectiveTime de seguido ,
  debe decrementarse mucho o volver a cero si se falla 1 dia o mas
+
+El usuario debería poder ver el tiempo a lo largo de los dias que lleva,como los ultimos 7 dias
+El usuario debe tambien ver su racha
