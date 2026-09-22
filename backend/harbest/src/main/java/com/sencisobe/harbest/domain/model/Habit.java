@@ -10,7 +10,7 @@ public class Habit {
         private int id;
         private String name;
         private int dailyObjectiveTime;
-        private  growthStage growthStage;
+        private  GrowthStage growthStage;
         private List<Water> waterHistory;
         private LocalDate creationDate;
 
@@ -19,9 +19,13 @@ public class Habit {
         this.name = name;
         this.dailyObjectiveTime= dailyObtectiveTime;
         this.growthStage= growthStage.SPROUT;
-        this.waterHistory= new ArrayList<>();
+        this.waterHistory= new ArrayList<>(); 
+        this.creationDate= LocalDate.now();
 
+    }
+    public void waterRegister ( Water water){
 
+        waterHistory.add(water);
         
     }
 }
