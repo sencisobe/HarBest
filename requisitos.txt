@@ -7,6 +7,5 @@ Este brote se regará con tiempo dedicado al hábito.
 Con la cantidad de tiempo que se riegue dicho brote a lo largo de los días irá creciendo dicho brote.
 El brote se llegará a convertir en un árbol.
 Para medir la constancia hare una variable int 
-streak que es aumenta  con el numero de dias que se 
-logra dailyObjectiveTime de seguido ,
+streak que es aumenta  con el numero de dias que se logra dailyObjectiveTime de seguido ,
  debe decrementarse mucho o volver a cero si se falla 1 dia o mas

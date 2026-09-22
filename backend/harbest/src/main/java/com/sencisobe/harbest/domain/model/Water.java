@@ -13,6 +13,9 @@ public class Water {
     public int getDuration() {
         return duration;
     }
+    public LocalDate getDate(){
+        return this.date;
+    }
     public void setDuration(int add){
         
         this.duration=duration+add;

@@ -60,4 +60,7 @@ public LocalDate getCreationDate() {
     return creationDate;
 }
 
+public void updateStreak(Water water){
+    LocalDate lastWateredDate = waterHistory.size() > 1 ? waterHistory.get(waterHistory.size()-2).getDate() : null;
+}
 }
