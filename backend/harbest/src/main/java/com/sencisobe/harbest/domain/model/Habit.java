@@ -38,12 +38,13 @@ public class Habit {
     public void waterRegister ( Water water,double growthPoints){
        waterHistory.add(water);
         updateStreak(water);
+        //where do i update growthpoints with my multiplier?
         totalExperience += growthPoints;
         updateGrowthStage();
     }
     
    /**
-     * Checks if a habit changes from Stage 
+     * Checks if a habit changes from Stage
      *   7 days  for half tree and 30 days for tree
      *  
      */

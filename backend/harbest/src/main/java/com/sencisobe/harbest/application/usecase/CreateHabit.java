@@ -1,12 +1,11 @@
-// application/usecase/CreateHabit.java
 package com.sencisobe.harbest.application.usecase;
 
 import com.sencisobe.harbest.domain.model.Habit;
-//import com.sencisobe.harbest.domain.repository.HabitRepository;
+import com.sencisobe.harbest.domain.repository.HabitRepository;
 
 
 public class CreateHabit {
-/* 
+
     private final HabitRepository habitRepository;
 
     public CreateHabit(HabitRepository habitRepository) {
@@ -18,5 +17,5 @@ public class CreateHabit {
         habitRepository.save(habit);
         return habit;
     }
-    */
+    
 }
