@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Habit {
 
-        private int id;
+        private Long id;
         private String name;
         private int dailyObjectiveTime;
         private  GrowthStage growthStage;
@@ -27,6 +27,18 @@ public class Habit {
         this.totalExperience=0;
 
     }
+    // For Persistency
+    public Habit(Long id, String name, int dailyObjectiveTime, GrowthStage growthStage,
+                int streak, double totalExperience, List<Water> waterHistory, LocalDate creationDate) {
+        this.id = id;
+        this.name = name;
+        this.dailyObjectiveTime = dailyObjectiveTime;
+        this.growthStage = growthStage;
+        this.streak = streak;
+        this.totalExperience = totalExperience;
+        this.waterHistory = new ArrayList<>(waterHistory);
+        this.creationDate = creationDate;
+}
 
     // METHODS 
     /**
@@ -38,7 +50,6 @@ public class Habit {
     public void waterRegister ( Water water,double growthPoints){
        waterHistory.add(water);
         updateStreak(water);
-        //where do i update growthpoints with my multiplier?
         totalExperience += growthPoints;
         updateGrowthStage();
     }
@@ -80,7 +91,7 @@ public void updateStreak(Water water){
     }
 }
     // GETTERS
-public int getId() {
+public Long getId() {
     return id;
 }
 

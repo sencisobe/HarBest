@@ -7,8 +7,13 @@ public class Water {
     private int duration;
 
     public Water(int duration){
-        this.duration= duration;
         date= LocalDate.now();
+        this.duration= duration;
+    }
+       // For persistency
+    public Water(LocalDate date, int duration) {
+        this.date = date;
+        this.duration = duration;
     }
     public int getDuration() {
         return duration;
@@ -18,6 +23,6 @@ public class Water {
     }
     public void setDuration(int add){
         
-        this.duration=duration+add;
+        this.duration=add;
     }
 }
