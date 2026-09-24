@@ -36,6 +36,11 @@ public class HabitRepositoryImpl implements HabitRepository {
     public List<Habit> findAll() {
         return jpaRepository.findAll().stream().map(this::toDomain).toList();
     }
+    
+     @Override
+    public void deleteById(Long id) {
+        jpaRepository.deleteById(id);
+    }
 
     private HabitEntity toEntity(Habit habit) {
         HabitEntity entity = new HabitEntity(
@@ -72,4 +77,5 @@ public class HabitRepositoryImpl implements HabitRepository {
                 entity.getCreationDate()
         );
     }
+   
 }

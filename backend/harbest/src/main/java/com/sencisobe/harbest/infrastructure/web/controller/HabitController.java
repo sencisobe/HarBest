@@ -2,6 +2,8 @@
 package com.sencisobe.harbest.infrastructure.web.controller;
 
 import com.sencisobe.harbest.application.usecase.CreateHabit;
+import com.sencisobe.harbest.application.usecase.DeleteHabit;
+import com.sencisobe.harbest.application.usecase.GetHabitById;
 import com.sencisobe.harbest.application.usecase.ListHabits;
 import com.sencisobe.harbest.application.usecase.RegisterWater;
 import com.sencisobe.harbest.domain.model.Habit;
@@ -20,11 +22,17 @@ public class HabitController {
     private final CreateHabit createHabit;
     private final RegisterWater registerWater;
     private final ListHabits listHabits;
+    private final DeleteHabit deleteHabit;
+    private final GetHabitById getHabitById;
 
-    public HabitController(CreateHabit createHabit, RegisterWater registerWater, ListHabits listHabits) {
+
+    public HabitController(CreateHabit createHabit, RegisterWater registerWater, 
+        ListHabits listHabits, DeleteHabit deleteHabit,GetHabitById getHabitById) {
         this.createHabit = createHabit;
         this.registerWater = registerWater;
         this.listHabits = listHabits;
+        this.deleteHabit = deleteHabit;
+        this.getHabitById = getHabitById;
     }
 
     @PostMapping
@@ -39,6 +47,11 @@ public class HabitController {
         Habit habit = registerWater.execute(id, water);
         return new HabitResponse(habit);
     }
+@GetMapping("/{id}")
+    public HabitResponse getById(@PathVariable Long id) {
+    Habit habit = getHabitById.execute(id);
+    return new HabitResponse(habit);
+}
 
     @GetMapping
     public List<HabitResponse> list() {
@@ -46,4 +59,8 @@ public class HabitController {
                 .map(HabitResponse::new)
                 .toList();
     }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        deleteHabit.execute(id);
+}
 }
