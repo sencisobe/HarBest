@@ -1,9 +1,11 @@
 // infrastructure/web/controller/HabitController.java
 package com.sencisobe.harbest.infrastructure.web.controller;
 
+import com.sencisobe.harbest.application.dto.DailyProgress;
 import com.sencisobe.harbest.application.usecase.CreateHabit;
 import com.sencisobe.harbest.application.usecase.DeleteHabit;
 import com.sencisobe.harbest.application.usecase.GetHabitById;
+import com.sencisobe.harbest.application.usecase.GetWeeklyProgress;
 import com.sencisobe.harbest.application.usecase.ListHabits;
 import com.sencisobe.harbest.application.usecase.RegisterWater;
 import com.sencisobe.harbest.domain.model.Habit;
@@ -24,15 +26,18 @@ public class HabitController {
     private final ListHabits listHabits;
     private final DeleteHabit deleteHabit;
     private final GetHabitById getHabitById;
+    private final GetWeeklyProgress getWeeklyProgress;
 
 
     public HabitController(CreateHabit createHabit, RegisterWater registerWater, 
-        ListHabits listHabits, DeleteHabit deleteHabit,GetHabitById getHabitById) {
+        ListHabits listHabits, DeleteHabit deleteHabit,GetHabitById getHabitById,
+        GetWeeklyProgress getWeeklyProgress) {
         this.createHabit = createHabit;
         this.registerWater = registerWater;
         this.listHabits = listHabits;
         this.deleteHabit = deleteHabit;
         this.getHabitById = getHabitById;
+        this.getWeeklyProgress = getWeeklyProgress;
     }
 
     @PostMapping
@@ -58,6 +63,10 @@ public class HabitController {
         return listHabits.execute().stream()
                 .map(HabitResponse::new)
                 .toList();
+    }
+    @GetMapping("/{id}/weekly-progress")
+    public List<DailyProgress> weeklyProgress(@PathVariable Long id) {
+        return getWeeklyProgress.execute(id);
     }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
