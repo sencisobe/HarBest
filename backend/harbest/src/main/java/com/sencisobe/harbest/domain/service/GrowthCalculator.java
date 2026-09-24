@@ -1,6 +1,10 @@
 package com.sencisobe.harbest.domain.service;
 
+import org.springframework.stereotype.Service;
+
 import com.sencisobe.harbest.domain.model.Water;
+
+@Service
 
 public class GrowthCalculator {
 

@@ -1,10 +1,14 @@
 // application/usecase/RegisterWater.java
 package com.sencisobe.harbest.application.usecase;
 
+import org.springframework.stereotype.Service;
+
 import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.model.Water;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 import com.sencisobe.harbest.domain.service.GrowthCalculator;
+
+@Service
 
 public class RegisterWater {
 

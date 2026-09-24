@@ -6,6 +6,9 @@ import com.sencisobe.harbest.domain.repository.HabitRepository;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+@Service
+
 public class ListHabits {
 
     private final HabitRepository habitRepository;

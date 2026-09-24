@@ -1,8 +1,11 @@
 package com.sencisobe.harbest.application.usecase;
 
+import org.springframework.stereotype.Service;
+
 import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 
+@Service
 
 public class CreateHabit {
 

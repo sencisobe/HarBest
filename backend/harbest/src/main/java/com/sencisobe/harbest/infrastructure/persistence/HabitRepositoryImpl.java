@@ -46,6 +46,7 @@ public class HabitRepositoryImpl implements HabitRepository {
                 habit.getTotalExperience(),
                 habit.getCreationDate()
         );
+        entity.setId(habit.getId());
 
         List<WaterEntity> waterEntities = habit.getWaterHistory().stream()
                 .map(w -> new WaterEntity(w.getDate(), w.getDuration(), entity))

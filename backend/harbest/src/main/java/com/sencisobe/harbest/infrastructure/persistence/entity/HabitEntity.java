@@ -73,4 +73,8 @@ public List<WaterEntity> getWaterHistory() {
 public LocalDate getCreationDate() {
     return creationDate;
 }
+
+public void setId(Long id) {
+    this.id = id;
+}
 }
