@@ -2,10 +2,16 @@ package com.sencisobe.harbest.domain.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Habit {
+        private static final Logger log = LoggerFactory.getLogger(Habit.class);
 
         private Long id;
         private String name;
@@ -47,19 +53,52 @@ public class Habit {
      * @param growthPoints points to sum accounting streak multiplier
      * 
      */
-    public void waterRegister ( Water water,double growthPoints){
-       waterHistory.add(water);
-        updateStreak(water);
-        totalExperience += growthPoints;
-        updateGrowthStage();
+   // Habit.java
+public void waterRegister(Water water, double growthPoints) {
+    int totalTodayBefore = waterHistory.stream()
+            .filter(w -> w.getDate().equals(water.getDate()))
+            .mapToInt(Water::getDuration)
+            .sum();
+
+    Optional<Water> todayWater = waterHistory.stream()
+            .filter(w -> w.getDate().equals(water.getDate()))
+            .findFirst();
+
+    if (todayWater.isPresent()) {
+        todayWater.get().addDuration(water.getDuration());
+    } else {
+        waterHistory.add(water);
     }
-    
-   /**
-     * Checks if a habit changes from Stage
-     *   7 days  for half tree and 30 days for tree
-     *  
-     */
-    private void updateGrowthStage() {
+
+    totalExperience += growthPoints;
+    updateStreak(water, totalTodayBefore);
+    updateGrowthStage();
+}
+
+public void updateStreak(Water water, int totalTodayBefore) {
+    boolean alreadyMetObjectiveToday = totalTodayBefore >= dailyObjectiveTime;
+    int totalTodayDuration = totalTodayBefore + water.getDuration();
+    boolean metObjectiveNow = totalTodayDuration >= dailyObjectiveTime;
+
+    log.debug("updateStreak: fecha={}, totalAntes={}, totalAhora={}, objetivo={}, yaCumplidoAntes={}, cumpleAhora={}",
+            water.getDate(), totalTodayBefore, totalTodayDuration, dailyObjectiveTime,
+            alreadyMetObjectiveToday, metObjectiveNow);
+
+    if (metObjectiveNow && !alreadyMetObjectiveToday) {
+        LocalDate yesterday = water.getDate().minusDays(1);
+        boolean isFirstEver = waterHistory.stream().map(Water::getDate).distinct().count() <= 1;
+        boolean wateredYesterday = waterHistory.stream().anyMatch(w -> w.getDate().equals(yesterday));
+
+        if (isFirstEver || wateredYesterday) {
+            streak++;
+            log.info("Streak incrementado a {}", streak);
+        } else {
+            streak = streak / 2;
+            log.info("Racha rota, streak reducido a {}", streak);
+        }
+    }
+}
+        private void updateGrowthStage() {
     if (totalExperience >= dailyObjectiveTime * 30) {
         growthStage = GrowthStage.TREE;
     } else if (totalExperience >= dailyObjectiveTime * 7) {
@@ -69,27 +108,6 @@ public class Habit {
     }
 }
 
-
-/**
- * Update streak , increments if it accomplish the daily objective else punish it by halfing the streak
- * @param water Daily Water to register
- * 
- */
-public void updateStreak(Water water){
-    LocalDate lastWateredDate = waterHistory.size() > 1 ? waterHistory.get(waterHistory.size()-2).getDate() : null;
-    
-    boolean isConsecutiveDay = lastWateredDate != null
-        && water.getDate().equals(lastWateredDate.plusDays(1));
-
-    boolean metObjective = water.getDuration() >= dailyObjectiveTime;
-
-    
-    if (metObjective && (lastWateredDate == null || isConsecutiveDay)) {
-        streak++;
-    } else if (!metObjective) {
-        streak = streak /2 ; 
-    }
-}
     // GETTERS
 public Long getId() {
     return id;

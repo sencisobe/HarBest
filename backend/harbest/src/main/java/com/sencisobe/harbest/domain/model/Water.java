@@ -25,4 +25,7 @@ public class Water {
         
         this.duration=add;
     }
+    public void addDuration(int extra) {
+    this.duration += extra;
+    }
 }
