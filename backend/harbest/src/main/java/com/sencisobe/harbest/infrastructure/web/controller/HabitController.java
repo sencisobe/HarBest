@@ -52,11 +52,11 @@ public class HabitController {
         Habit habit = registerWater.execute(id, water);
         return new HabitResponse(habit);
     }
-@GetMapping("/{id}")
-    public HabitResponse getById(@PathVariable Long id) {
-    Habit habit = getHabitById.execute(id);
-    return new HabitResponse(habit);
-}
+    @GetMapping("/{id}")
+        public HabitResponse getById(@PathVariable Long id) {
+        Habit habit = getHabitById.execute(id);
+        return new HabitResponse(habit);
+    }
 
     @GetMapping
     public List<HabitResponse> list() {
