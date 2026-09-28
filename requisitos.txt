@@ -28,3 +28,15 @@ PARA UN MVP QUIERO:
 		Ver desarrollo semanal
 		Borrar habito
 		Listar Habitos
+
+
+TEST CLODINE:
+Media
+
+HabitRepositoryImpl con @DataJpaTest: que guardar un hábito ya existente actualiza en vez de duplicar, y que toEntity/toDomain conservan el historial de riegos. El bug del hábito duplicado lo habría cazado.
+CreateHabit, DeleteHabit, GetHabitById: triviales con el fake repo. Sobre todo el caso de "hábito no encontrado".
+
+Baja para el MVP
+
+HabitController con @WebMvcTest y MockMvc.
+Water.addDuration: ya lo cubren indirectamente los tests de Habit.

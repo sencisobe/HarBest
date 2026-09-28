@@ -8,6 +8,8 @@ import com.sencisobe.harbest.domain.model.Water;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 import com.sencisobe.harbest.domain.service.GrowthCalculator;
 
+import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
+
 @Service
 
 public class RegisterWater {
@@ -22,7 +24,7 @@ public class RegisterWater {
 
     public Habit execute(Long habitId, Water water) {
         Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new IllegalArgumentException("Habit not found"));
+                .orElseThrow(() -> new HabitNotFoundException(habitId));
 
         double growthPoints = growthCalculator.calculateGrowthPoints(water, habit.getStreak());
         habit.waterRegister(water, growthPoints);

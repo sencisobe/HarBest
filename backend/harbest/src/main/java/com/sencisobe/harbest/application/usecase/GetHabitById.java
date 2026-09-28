@@ -5,6 +5,9 @@ import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 import org.springframework.stereotype.Service;
 
+import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
+
+
 @Service
 public class GetHabitById {
 
@@ -16,6 +19,6 @@ public class GetHabitById {
 
     public Habit execute(Long habitId) {
         return habitRepository.findById(habitId)
-                .orElseThrow(() -> new IllegalArgumentException("Habit not found"));
+                .orElseThrow(() ->  new HabitNotFoundException(habitId));
     }
 }
