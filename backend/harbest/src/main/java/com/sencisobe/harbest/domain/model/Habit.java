@@ -87,8 +87,9 @@ public void updateStreak(Water water, int totalTodayBefore) {
     if (metObjectiveNow && !alreadyMetObjectiveToday) {
         LocalDate yesterday = water.getDate().minusDays(1);
         boolean isFirstEver = waterHistory.stream().map(Water::getDate).distinct().count() <= 1;
-        boolean wateredYesterday = waterHistory.stream().anyMatch(w -> w.getDate().equals(yesterday));
-
+boolean wateredYesterday = waterHistory.stream()
+        .anyMatch(w -> w.getDate().equals(yesterday) && w.getDuration() >= dailyObjectiveTime);
+        
         if (isFirstEver || wateredYesterday) {
             streak++;
             log.info("Streak incrementado a {}", streak);
