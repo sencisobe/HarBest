@@ -1,0 +1,5 @@
+harbest\HarBest\backend\harbest> .\mvnw clean compile  
+
+harbest\HarBest\backend\harbest> .\mvnw test
+
+harbest\HarBest\backend\harbest> .\mvnw spring-boot:run           

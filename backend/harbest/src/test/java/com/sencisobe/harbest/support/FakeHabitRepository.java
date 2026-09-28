@@ -30,4 +30,8 @@ public class FakeHabitRepository implements HabitRepository {
     public void deleteById(Long id) {
         store.remove(id);
     }
+        @Override
+    public boolean existsByName(String name) {
+        return store.values().stream().anyMatch(h -> h.getName().equalsIgnoreCase(name));
+    }
 }

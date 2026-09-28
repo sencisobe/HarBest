@@ -35,7 +35,7 @@ public class GetWeeklyProgress {
         Habit habit = habitRepository.findById(habitId)
                 .orElseThrow(() -> {
                     log.warn("Progreso semanal: hábito {} no encontrado", habitId);
-                    return new IllegalArgumentException("Habit not found");
+                    return new HabitNotFoundException(habitId);
                 });
 
         LocalDate today = LocalDate.now();

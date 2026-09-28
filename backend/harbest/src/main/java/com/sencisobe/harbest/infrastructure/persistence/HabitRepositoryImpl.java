@@ -60,7 +60,10 @@ public class HabitRepositoryImpl implements HabitRepository {
 
         return entity;
     }
-
+    @Override
+    public boolean existsByName(String name) {
+        return jpaRepository.existsByNameIgnoreCase(name);
+    }
     private Habit toDomain(HabitEntity entity) {
         List<Water> waters = entity.getWaterHistory().stream()
                 .map(w -> new Water(w.getDate(), w.getDuration()))

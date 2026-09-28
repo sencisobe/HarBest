@@ -1,10 +1,11 @@
 package com.sencisobe.harbest.application.usecase;
 
 import com.sencisobe.harbest.application.dto.DailyProgress;
+import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
 import com.sencisobe.harbest.domain.model.GrowthStage;
 import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.model.Water;
-import com.sencisobe.harbest.domain.repository.HabitRepository;
+import com.sencisobe.harbest.support.FakeHabitRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -15,33 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GetWeeklyProgressTest {
 
     private final LocalDate today = LocalDate.now();
-
-    /** Repositorio en memoria, sin Spring ni base de datos. */
-    static class FakeHabitRepository implements HabitRepository {
-        private final Map<Long, Habit> store = new HashMap<>();
-
-        @Override
-        public Habit save(Habit habit) {
-            store.put(habit.getId(), habit);
-            return habit;
-        }
-
-        @Override
-        public Optional<Habit> findById(Long id) {
-            return Optional.ofNullable(store.get(id));
-        }
-
-        @Override
-        public List<Habit> findAll() {
-            return new ArrayList<>(store.values());
-        }
-
-        @Override
-        public void deleteById(Long id) {
-            store.remove(id);
-        }
-    }
-
     private GetWeeklyProgress useCaseWith(Water... waters) {
         FakeHabitRepository repo = new FakeHabitRepository();
         repo.save(new Habit(1L, "Leer", 30, GrowthStage.SPROUT, 0, 0.0,
@@ -98,6 +72,6 @@ class GetWeeklyProgressTest {
     void habitoInexistenteLanzaExcepcion() {
         GetWeeklyProgress useCase = new GetWeeklyProgress(new FakeHabitRepository());
 
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(999L));
+         assertThrows(HabitNotFoundException.class, () -> useCase.execute(999L));
     }
 }

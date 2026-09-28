@@ -1,6 +1,7 @@
 // src/test/java/com/sencisobe/harbest/application/usecase/RegisterWaterTest.java
 package com.sencisobe.harbest.application.usecase;
 
+import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
 import com.sencisobe.harbest.domain.model.GrowthStage;
 import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.model.Water;
@@ -93,7 +94,7 @@ class RegisterWaterTest {
 
     @Test
     void habitoInexistenteLanzaExcepcion() {
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(HabitNotFoundException.class,
                 () -> useCase.execute(999L, new Water(DAY, 30)));
     }
 }

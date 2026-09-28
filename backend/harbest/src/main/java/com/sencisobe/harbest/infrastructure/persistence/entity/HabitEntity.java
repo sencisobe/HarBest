@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "habits")
+
 public class HabitEntity {
 
     @Id

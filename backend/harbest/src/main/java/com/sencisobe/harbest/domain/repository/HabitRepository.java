@@ -9,4 +9,5 @@ public interface HabitRepository {
     Optional<Habit> findById(Long id);
     List<Habit> findAll();
     void deleteById(Long id);
+    boolean existsByName(String name);
 }
