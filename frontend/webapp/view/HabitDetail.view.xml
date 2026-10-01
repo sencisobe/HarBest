@@ -1,0 +1,19 @@
+<mvc:View
+    controllerName="harbest.controller.HabitDetail"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page title="{/name}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Text text="Etapa: {/growthStage}"/>
+                <Text text="XP: {/totalExperience}"/>
+                <Text text="Racha: {/streak}"/>
+
+                <Text text="Últimos 7 días" class="sapUiSmallMarginTop sapUiMediumMarginBottom"/>
+                <List items="{weekly>/}">
+                    <StandardListItem title="{weekly>date}" info="{weekly>duration} min"/>
+                </List>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

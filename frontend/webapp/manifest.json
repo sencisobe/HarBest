@@ -74,12 +74,21 @@
 					"pattern": "",
 					"name": "main",
 					"target": "main"
+				},
+				{
+					"pattern": "habit/{habitId}",
+					"name": "habitDetail",
+					"target": "habitDetail"
 				}
 			],
 			"targets": {
 				"main": {
 					"id": "main",
 					"name": "Main"
+				},
+				 "habitDetail": {
+					"viewId": "habitDetail",
+					"viewName": "HabitDetail"
 				}
 			}
 		}

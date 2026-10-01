@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sencisobe.harbest.domain.exception.InvalidHabitDataException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -23,7 +25,9 @@ public class Habit {
         private double totalExperience;
 
     public Habit(String name, int dailyObtectiveTime){
-        
+        if (dailyObjectiveTime <= 0) {
+        throw new InvalidHabitDataException("dailyObjectiveTime must be positive");
+    }
         this.name = name;
         this.dailyObjectiveTime= dailyObtectiveTime;
         this.growthStage= GrowthStage.SPROUT;

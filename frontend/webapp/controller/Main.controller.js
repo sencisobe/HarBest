@@ -48,7 +48,12 @@ sap.ui.define(["./BaseController", "sap/m/MessageBox", "sap/ui/core/Fragment"], 
 					this._oCreateDialog.close();
 					this.getView().getModel().loadData("http://localhost:8081/habits");
 				});
-}
+		},
+		onHabitPress: function (oEvent) {
+			var oCtx = oEvent.getSource().getBindingContext();
+			var sHabitId = oCtx.getProperty("id");
+			this.getRouter().navTo("habitDetail", { habitId: sHabitId });
+		}
 		
 	});
 	

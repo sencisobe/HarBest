@@ -3,6 +3,8 @@ package com.sencisobe.harbest.infrastructure.web;
 
 import com.sencisobe.harbest.domain.exception.DuplicateHabitNameException;
 import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
+import com.sencisobe.harbest.domain.exception.InvalidHabitDataException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,4 +21,8 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleDuplicateName(DuplicateHabitNameException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     }
+    @ExceptionHandler(InvalidHabitDataException.class)
+    public ProblemDetail handleInvalidData(InvalidHabitDataException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+}
 }

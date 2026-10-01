@@ -12,23 +12,17 @@
 		title="{i18n>appTitle}"
 		id="page">
 		<content>
-			<IllustratedMessage
-				title="{i18n>appTitle}"
-				illustrationType="sapIllus-SuccessHighFive"
-				enableVerticalResponsiveness="true"
-				description="{i18n>appDescription}">
-				<additionalContent>
-					<Button
-						id="helloButton"
-						text="{formatter: 'formatter.formatValue', path: 'i18n>btnText'}"
-						press=".sayHello" />
-				</additionalContent>
-			</IllustratedMessage>
+		
+			<VBox alignItems="Center" class="sapUiMediumMargin">
+				<Image src="images/cartoon-illustration-of-a-tree-with-green-leaves-free-png.webp" width="150px" class="sapUiSmallMarginBottom"/>
+				<Title text="{i18n>appTitle}" level="H1"/>
+				<Text text="{i18n>appDescription}" class="sapUiTinyMarginTop"/>
+			</VBox>
 			
 			<Button text="Create habit" press=".onOpenCreateDialog" icon="sap-icon://add" class="sapUiSmallMarginBottom"/>
-			
+
 			<List items="{/}">
-				<CustomListItem>
+				<CustomListItem type="Navigation" press=".onHabitPress">
 					<HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
 						<VBox>
 							<Text text="{name}"/>

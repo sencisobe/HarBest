@@ -19,15 +19,15 @@ EL usuario debe como MAXIMO tener 5 hábitos (si no se verá forzado a borrar un
 El usuario debe ver que si cumple con el objetivo diario una felicitación
 
 PARA UN MVP QUIERO:
-	Persistencia , me molaria usarlo ya de forma personal
-	Frontend UI5 básico
+	Persistencia , me molaria usarlo ya de forma personal h
+	Frontend UI5 básico h
 	Casos de Uso:
-		Crear habito
-		Ver progreso de hábito
+		Crear habito h
+		Ver progreso de hábito 
 		Insertar riego
 		Ver desarrollo semanal
-		Borrar habito
-		Listar Habitos
+		Borrar habito h 
+		Listar Habitos 
 
 
 TEST CLODINE:
