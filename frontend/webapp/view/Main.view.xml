@@ -24,6 +24,20 @@
 						press=".sayHello" />
 				</additionalContent>
 			</IllustratedMessage>
+			
+			<Button text="Create habit" press=".onOpenCreateDialog" icon="sap-icon://add" class="sapUiSmallMarginBottom"/>
+			
+			<List items="{/}">
+				<CustomListItem>
+					<HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+						<VBox>
+							<Text text="{name}"/>
+							<Text text="{growthStage} - {totalExperience} XP"/>
+						</VBox>
+						<Button icon="sap-icon://delete" press="onDeleteHabit" type="Reject"/>
+					</HBox>
+				</CustomListItem>
+			</List>
 		</content>
 	</Page>
 

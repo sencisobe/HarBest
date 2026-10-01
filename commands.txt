@@ -2,4 +2,13 @@ harbest\HarBest\backend\harbest> .\mvnw clean compile
 
 harbest\HarBest\backend\harbest> .\mvnw test
 
-harbest\HarBest\backend\harbest> .\mvnw spring-boot:run           
+harbest\HarBest\backend\harbest> .\mvnw spring-boot:run    
+
+FRONTEND : npm start
+
+
+links:
+
+: UI5 Explored App → https://sdk.openui5.org/test-resources/sap/m/demokit/cart/webapp/index.html no, el correcto es:
+
+https://sdk.openui5.org/#/controls — ahí tienes cada control de sap.m con su demo interactivo y el XML/JS de ejemplo. Es tu referencia principal de ahora en adelante.

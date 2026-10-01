@@ -1,4 +1,9 @@
-sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "./model/models"], function (UIComponent, Device, models) {
+sap.ui.define([
+	"sap/ui/core/UIComponent",
+	"sap/ui/Device",
+	"sap/ui/model/json/JSONModel",
+	"./model/models"
+], function (UIComponent, Device, JSONModel, models) {
 	"use strict";
 
 	return UIComponent.extend("harbest.Component", {
@@ -7,13 +12,13 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "./model/models"], fu
 			interfaces: ["sap.ui.core.IAsyncContentCreation"]
 		},
 		init: function () {
-			// call the base component's init function
-			UIComponent.prototype.init.call(this); // create the views based on the url/hash
+			UIComponent.prototype.init.call(this);
 
-			// create the device model
 			this.setModel(models.createDeviceModel(), "device");
 
-			// create the views based on the url/hash
+			var oHabitsModel = new JSONModel();
+			oHabitsModel.loadData("http://localhost:8081/habits");
+			this.setModel(oHabitsModel);
 			this.getRouter().initialize();
 		},
 		/**

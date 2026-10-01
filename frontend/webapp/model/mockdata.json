@@ -1,0 +1,6 @@
+{
+  "habits": [
+    { "id": 1, "name": "Regar albahaca", "stage": "Brote", "xp": 20 },
+    { "id": 2, "name": "Leer 20 min", "stage": "Planta", "xp": 65 }
+  ]
+}
