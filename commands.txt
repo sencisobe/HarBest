@@ -6,6 +6,7 @@ harbest\HarBest\backend\harbest> .\mvnw spring-boot:run
 
 FRONTEND : npm start
 
+Do not forget to deply the Database :D
 
 links:
 

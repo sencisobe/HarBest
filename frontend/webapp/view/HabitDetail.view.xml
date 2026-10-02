@@ -8,7 +8,7 @@
                 <Text text="Etapa: {/growthStage}"/>
                 <Text text="XP: {/totalExperience}"/>
                 <Text text="Racha: {/streak}"/>
-
+                <Button text="Regar" icon="sap-icon://watering-can" type="Emphasized" press=".onOpenWaterDialog" class="sapUiSmallMarginTop"/>
                 <Text text="Últimos 7 días" class="sapUiSmallMarginTop sapUiMediumMarginBottom"/>
                 <List items="{weekly>/}">
                     <StandardListItem title="{weekly>date}" info="{weekly>duration} min"/>

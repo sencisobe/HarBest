@@ -40,3 +40,10 @@ Baja para el MVP
 
 HabitController con @WebMvcTest y MockMvc.
 Water.addDuration: ya lo cubren indirectamente los tests de Habit.
+
+Para cuando llegue a la fase de "diseño avanzado", el enfoque más eficiente no es "dibujar bocetos por vista", sino antes definir un sistema visual pequeño: paleta de colores (verdes, tierra, tonos del jardín), tipografía, y cómo representar visualmente las etapas de crecimiento (SPROUT → HALF_TREE → TREE) con iconos o ilustraciones propias. Una vez tengas eso, aplicarlo a cada vista es mecánico.
+
+Dos cosas a tener en cuenta en UI5 quando llegue ese momento:
+
+Puedes personalizar el tema con UI5 Theme Designer o CSS custom sobre el tema base, sin tener que reescribir componentes.
+Para las ilustraciones de planta/árbol, si no quieres diseñarlas tú, hay bancos de SVG libres (undraw.co, unDraw, Freepik con licencia) que encajan bien con un estilo friendly.
