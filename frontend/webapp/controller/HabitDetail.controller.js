@@ -1,4 +1,4 @@
-sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment"], function (BaseController, JSONModel,  Fragment) {
+sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment" ,"sap/m/MessageBox"], function (BaseController, JSONModel,  Fragment, MessageBox) {
     "use strict";
 
     return BaseController.extend("harbest.controller.HabitDetail", {
@@ -46,11 +46,19 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/F
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ duration: iDuration })
             })
-                .then(() => {
+                .then(function (response) {
+                    if (!response.ok) {
+                        return response.json().then(function (oProblem) {
+                            throw new Error(oProblem.detail || "Error al regar el hábito");
+                        });
+                    }
                     this._oWaterDialog.close();
                     this.getView().getModel().loadData("http://localhost:8081/habits/" + this._sHabitId);
                     this.getView().getModel("weekly").loadData("http://localhost:8081/habits/" + this._sHabitId + "/weekly-progress");
-                });
+                }.bind(this))
+                .catch(function (oError) {
+                    MessageBox.error(oError.message);
+                }.bind(this));
         },
 
         onNavBack: function () {

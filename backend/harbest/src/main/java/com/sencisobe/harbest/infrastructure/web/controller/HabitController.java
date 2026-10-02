@@ -13,6 +13,9 @@ import com.sencisobe.harbest.domain.model.Water;
 import com.sencisobe.harbest.infrastructure.web.dto.CreateHabitRequest;
 import com.sencisobe.harbest.infrastructure.web.dto.HabitResponse;
 import com.sencisobe.harbest.infrastructure.web.dto.RegisterWaterRequest;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +44,7 @@ public class HabitController {
     }
 
     @PostMapping
-    public HabitResponse create(@RequestBody CreateHabitRequest request) {
+    public HabitResponse create(@Valid @RequestBody CreateHabitRequest request) {
         Habit habit = createHabit.execute(request.getName(), request.getDailyObjectiveTime());
         return new HabitResponse(habit);
     }

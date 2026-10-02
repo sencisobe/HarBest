@@ -44,9 +44,17 @@ sap.ui.define(["./BaseController", "sap/m/MessageBox", "sap/ui/core/Fragment"], 
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ name: sName, dailyObjectiveTime: iTime })
 			})
-				.then(() => {
+				.then(function (response) {
+					if (!response.ok) {
+						return response.json().then(function (oProblem) {
+							throw new Error(oProblem.detail || "Error al crear el hábito");
+						});
+					}
 					this._oCreateDialog.close();
 					this.getView().getModel().loadData("http://localhost:8081/habits");
+				}.bind(this))
+				.catch(function (oError) {
+					MessageBox.error(oError.message);
 				});
 		},
 		onHabitPress: function (oEvent) {
