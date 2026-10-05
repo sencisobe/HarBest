@@ -1,18 +1,18 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog title="Regar hábito" id="waterHabitDialog">
+    <Dialog title="Water Habit" id="waterHabitDialog">
         <content>
             <VBox class="sapUiSmallMargin">
-                <Label text="Minutos dedicados" labelFor="waterDurationInput"/>
+                <Label text="Minutes Invested" labelFor="waterDurationInput"/>
                 <Input id="waterDurationInput" type="Number" placeholder="30"/>
             </VBox>
         </content>
         <beginButton>
-            <Button text="Regar" type="Emphasized" press=".onConfirmWaterHabit"/>
+            <Button text="Water" type="Emphasized" press=".onConfirmWaterHabit"/>
         </beginButton>
         <endButton>
-            <Button text="Cancelar" press=".onCancelWaterHabit"/>
+            <Button text="Cancel" press=".onCancelWaterHabit"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

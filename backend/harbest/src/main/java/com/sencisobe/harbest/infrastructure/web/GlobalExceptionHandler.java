@@ -8,6 +8,7 @@ import com.sencisobe.harbest.domain.exception.InvalidWaterDataException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -29,5 +30,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidWaterDataException.class)
     public ProblemDetail handleInvalidWaterData(InvalidWaterDataException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
+        String sMessage = ex.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> fieldError.getDefaultMessage())
+                .findFirst()
+                .orElse(" Invalid data");
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, sMessage);
     }
 }

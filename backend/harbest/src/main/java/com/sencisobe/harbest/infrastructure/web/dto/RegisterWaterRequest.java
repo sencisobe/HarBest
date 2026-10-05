@@ -1,18 +1,20 @@
 // infrastructure/web/dto/RegisterWaterRequest.java
 package com.sencisobe.harbest.infrastructure.web.dto;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class RegisterWaterRequest {
 
-     @Positive(message = "El duracion debe ser positiva")
-    private int duration;
+    @NotNull (message ="Minutes invested must be provided")
+    @Positive(message = "Minutes invested can´t be negative")
+    private Integer duration;
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 }

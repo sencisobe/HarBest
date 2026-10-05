@@ -7,12 +7,12 @@ import jakarta.validation.constraints.Positive;
 
 public class CreateHabitRequest {
 
-    @NotBlank(message = "El nombre es obligatorio")
+    @NotBlank(message = "The name is mandatory")
     private String name;
 
-    @NotNull(message = "El tiempo diario es obligatorio")
-    @Positive(message = "El tiempo diario debe ser positivo")
-    private int dailyObjectiveTime;
+    @NotNull(message = "Daily objective time must be filled")
+    @Positive(message = "Daily objective time can´t be negative")
+    private Integer dailyObjectiveTime;
 
     public String getName() {
         return name;
@@ -22,11 +22,11 @@ public class CreateHabitRequest {
         this.name = name;
     }
 
-    public int getDailyObjectiveTime() {
+    public Integer getDailyObjectiveTime() {
         return dailyObjectiveTime;
     }
 
-    public void setDailyObjectiveTime(int dailyObjectiveTime) {
+    public void setDailyObjectiveTime(Integer dailyObjectiveTime) {
         this.dailyObjectiveTime = dailyObjectiveTime;
     }
 }

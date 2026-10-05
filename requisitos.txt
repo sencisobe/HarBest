@@ -16,7 +16,10 @@ El usuario debe tambien ver su racha
 
 El usuario debe poder borrar los hábitos
 EL usuario debe como MAXIMO tener 5 hábitos (si no se verá forzado a borrar uno)
+
 El usuario debe ver que si cumple con el objetivo diario una felicitación
+
+El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
 
 PARA UN MVP QUIERO:
 	Persistencia , me molaria usarlo ya de forma personal h

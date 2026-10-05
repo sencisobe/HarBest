@@ -10,7 +10,7 @@ public class Water {
 
 public Water(int duration) {
     if (duration <= 0) {
-        throw new InvalidWaterDataException("duration must be positive");
+        throw new InvalidWaterDataException("Duration must be positive");
     }
     this.date = LocalDate.now();
     this.duration = duration;
@@ -18,7 +18,7 @@ public Water(int duration) {
 
 public Water(LocalDate date, int duration) {
     if (duration <= 0) {
-        throw new InvalidWaterDataException("duration must be positive");
+        throw new InvalidWaterDataException("Duration must be positive");
     }
     this.date = date;
     this.duration = duration;

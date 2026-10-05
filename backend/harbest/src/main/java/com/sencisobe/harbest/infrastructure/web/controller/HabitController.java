@@ -50,7 +50,7 @@ public class HabitController {
     }
 
     @PostMapping("/{id}/water")
-    public HabitResponse water(@PathVariable Long id, @RequestBody RegisterWaterRequest request) {
+    public HabitResponse water( @PathVariable Long id, @Valid @RequestBody RegisterWaterRequest request) {
         Water water = new Water(request.getDuration());
         Habit habit = registerWater.execute(id, water);
         return new HabitResponse(habit);

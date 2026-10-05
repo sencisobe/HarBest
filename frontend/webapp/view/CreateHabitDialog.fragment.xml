@@ -1,20 +1,20 @@
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <Dialog title="Nuevo hábito" id="createHabitDialog">
+    <Dialog title="Create Habit" id="createHabitDialog">
         <content>
             <VBox class="sapUiSmallMargin">
-                <Label text="Nombre" labelFor="habitNameInput"/>
-                <Input id="habitNameInput" placeholder="Nombre del hábito"/>
-                <Label text="Tiempo diario objetivo (minutos)" labelFor="habitTimeInput" class="sapUiSmallMarginTop"/>
+                <Label text="Name" labelFor="habitNameInput"/>
+                <Input id="habitNameInput" placeholder="Habit name"/>
+                <Label text="Daily objective time (in minutes)" labelFor="habitTimeInput" class="sapUiSmallMarginTop"/>
                 <Input id="habitTimeInput" type="Number" placeholder="30"/>
             </VBox>
         </content>
         <beginButton>
-            <Button text="Crear" type="Emphasized" press=".onConfirmCreateHabit"/>
+            <Button text="Create" type="Emphasized" press=".onConfirmCreateHabit"/>
         </beginButton>
         <endButton>
-            <Button text="Cancelar" press=".onCancelCreateHabit"/>
+            <Button text="Cancel" press=".onCancelCreateHabit"/>
         </endButton>
     </Dialog>
 </core:FragmentDefinition>
