@@ -39,26 +39,38 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/F
         },
 
         onConfirmWaterHabit: function () {
-            var iDuration = parseInt(this.byId("waterDurationInput").getValue(), 10);
+    var iDuration = parseInt(this.byId("waterDurationInput").getValue(), 10);
+    var sHabitId = this._sHabitId;
+    var that = this;
 
-            fetch("http://localhost:8081/habits/" + this._sHabitId + "/water", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ duration: iDuration })
-            })
-                .then(function (response) {
-                    if (!response.ok) {
-                        return response.json().then(function (oProblem) {
-                            throw new Error(oProblem.detail || "Error al regar el hábito");
-                        });
-                    }
-                    this._oWaterDialog.close();
-                    this.getView().getModel().loadData("http://localhost:8081/habits/" + this._sHabitId);
-                    this.getView().getModel("weekly").loadData("http://localhost:8081/habits/" + this._sHabitId + "/weekly-progress");
-                }.bind(this))
-                .catch(function (oError) {
-                    MessageBox.error(oError.message);
-                }.bind(this));
+    fetch("http://localhost:8081/habits/" + sHabitId + "/water", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ duration: iDuration })
+    })
+        .then(function (response) {
+            if (!response.ok) {
+                return response.json().then(function (oProblem) {
+                    throw new Error(oProblem.detail || "Error watering the habit");
+                });
+            }
+            return response.json();
+        })
+        .then(function (oResult) {
+            that._oWaterDialog.close();
+
+            that.getView().getModel().setData(oResult.habit);
+            that.getView().getModel("weekly").loadData("http://localhost:8081/habits/" + sHabitId + "/weekly-progress");
+
+            if (oResult.objectiveMetToday) {
+                MessageBox.success("Daily objective completed!");
+            } else {
+                MessageBox.information("You have " + oResult.remainingMinutesToday + " minutes left to reach today's objective.");
+            }
+        })
+        .catch(function (oError) {
+            MessageBox.error(oError.message);
+        });
         },
 
         onNavBack: function () {
