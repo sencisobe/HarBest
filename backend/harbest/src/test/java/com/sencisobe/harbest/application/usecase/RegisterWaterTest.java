@@ -120,4 +120,13 @@ class RegisterWaterTest {
         assertTrue(result.isObjectiveMetToday());
         assertEquals(0, result.getRemainingMinutesToday());
     }
+    @Test
+    void cumpleObjetivoNoDejaMinutosRestantesSobrado() {
+        savedHabit(0, 0.0);
+
+        WaterResult result = useCase.execute(1L, new Water(DAY, 60));
+
+        assertTrue(result.isObjectiveMetToday());
+        assertEquals(0, result.getRemainingMinutesToday());
+    }
 }

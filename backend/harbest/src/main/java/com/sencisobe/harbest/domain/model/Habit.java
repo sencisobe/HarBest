@@ -24,12 +24,12 @@ public class Habit {
         private LocalDate creationDate;
         private double totalExperience;
 
-    public Habit(String name, int dailyObtectiveTime){
+    public Habit(String name, int dailyObjectiveTime){
         if (dailyObjectiveTime <= 0) {
         throw new InvalidHabitDataException("dailyObjectiveTime must be positive");
     }
         this.name = name;
-        this.dailyObjectiveTime= dailyObtectiveTime;
+        this.dailyObjectiveTime= dailyObjectiveTime;
         this.growthStage= GrowthStage.SPROUT;
         this.waterHistory= new ArrayList<>(); 
         this.streak=0;
