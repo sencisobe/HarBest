@@ -1,7 +1,18 @@
 // infrastructure/web/controller/HabitController.java
 package com.sencisobe.harbest.infrastructure.web.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.sencisobe.harbest.application.dto.DailyProgress;
+import com.sencisobe.harbest.application.dto.WaterResult;
 import com.sencisobe.harbest.application.usecase.CreateHabit;
 import com.sencisobe.harbest.application.usecase.DeleteHabit;
 import com.sencisobe.harbest.application.usecase.GetHabitById;
@@ -13,12 +24,9 @@ import com.sencisobe.harbest.domain.model.Water;
 import com.sencisobe.harbest.infrastructure.web.dto.CreateHabitRequest;
 import com.sencisobe.harbest.infrastructure.web.dto.HabitResponse;
 import com.sencisobe.harbest.infrastructure.web.dto.RegisterWaterRequest;
+import com.sencisobe.harbest.infrastructure.web.dto.WaterResponse;
 
 import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/habits")
@@ -50,10 +58,10 @@ public class HabitController {
     }
 
     @PostMapping("/{id}/water")
-    public HabitResponse water( @PathVariable Long id, @Valid @RequestBody RegisterWaterRequest request) {
+    public WaterResponse water(@PathVariable Long id, @Valid @RequestBody RegisterWaterRequest request) {
         Water water = new Water(request.getDuration());
-        Habit habit = registerWater.execute(id, water);
-        return new HabitResponse(habit);
+        WaterResult result = registerWater.execute(id, water);
+        return new WaterResponse(result.getHabit(), result.isObjectiveMetToday(), result.getRemainingMinutesToday());
     }
     @GetMapping("/{id}")
         public HabitResponse getById(@PathVariable Long id) {

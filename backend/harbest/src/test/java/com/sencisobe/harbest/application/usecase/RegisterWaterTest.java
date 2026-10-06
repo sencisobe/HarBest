@@ -1,6 +1,7 @@
 // src/test/java/com/sencisobe/harbest/application/usecase/RegisterWaterTest.java
 package com.sencisobe.harbest.application.usecase;
 
+import com.sencisobe.harbest.application.dto.WaterResult;
 import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
 import com.sencisobe.harbest.domain.model.GrowthStage;
 import com.sencisobe.harbest.domain.model.Habit;
@@ -37,27 +38,27 @@ class RegisterWaterTest {
     void riegoSinRachaSumaLaDuracionComoXp() {
         savedHabit(0, 0.0);
 
-        Habit result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
 
-        assertEquals(30.0, result.getTotalExperience(), 0.001);
+        assertEquals(30.0, result.getHabit().getTotalExperience(), 0.001);
     }
 
     @Test
     void laRachaActualAplicaMultiplicadorAlXp() {
         savedHabit(10, 0.0); // streak 10 -> x1.2
 
-        Habit result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
 
-        assertEquals(36.0, result.getTotalExperience(), 0.001);
+        assertEquals(36.0, result.getHabit().getTotalExperience(), 0.001);
     }
 
     @Test
     void cumplirObjetivoIncrementaLaRacha() {
         savedHabit(0, 0.0);
 
-        Habit result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
 
-        assertEquals(1, result.getStreak());
+        assertEquals(1, result.getHabit().getStreak());
     }
 
     @Test
@@ -75,9 +76,9 @@ class RegisterWaterTest {
     void superarElUmbralHaceEvolucionarElHabito() {
         savedHabit(0, 200.0); // HALF_TREE empieza en 210
 
-        Habit result = useCase.execute(1L, new Water(DAY, 30)); // 230
+        WaterResult result = useCase.execute(1L, new Water(DAY, 30)); // 230
 
-        assertEquals(GrowthStage.HALF_TREE, result.getGrowthStage());
+        assertEquals(GrowthStage.HALF_TREE, result.getHabit().getGrowthStage());
     }
 
     @Test
@@ -85,16 +86,38 @@ class RegisterWaterTest {
         savedHabit(0, 0.0);
 
         useCase.execute(1L, new Water(DAY, 15));
-        Habit result = useCase.execute(1L, new Water(DAY, 20));
+        WaterResult result = useCase.execute(1L, new Water(DAY, 20));
 
-        assertEquals(1, result.getWaterHistory().size());
-        assertEquals(35, result.getWaterHistory().get(0).getDuration());
-        assertEquals(1, result.getStreak());
+        assertEquals(1, result.getHabit().getWaterHistory().size());
+        assertEquals(35, result.getHabit().getWaterHistory().get(0).getDuration());
+        assertEquals(1, result.getHabit().getStreak());
     }
 
     @Test
     void habitoInexistenteLanzaExcepcion() {
         assertThrows(HabitNotFoundException.class,
                 () -> useCase.execute(999L, new Water(DAY, 30)));
+    }
+
+    // --- Nuevos: cobertura de objectiveMetToday / remainingMinutesToday ---
+
+    @Test
+    void noCumpleObjetivoIndicaMinutosRestantes() {
+        savedHabit(0, 0.0);
+
+        WaterResult result = useCase.execute(1L, new Water(DAY, 10)); // objetivo 30
+
+        assertFalse(result.isObjectiveMetToday());
+        assertEquals(20, result.getRemainingMinutesToday());
+    }
+
+    @Test
+    void cumpleObjetivoNoDejaMinutosRestantes() {
+        savedHabit(0, 0.0);
+
+        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
+
+        assertTrue(result.isObjectiveMetToday());
+        assertEquals(0, result.getRemainingMinutesToday());
     }
 }

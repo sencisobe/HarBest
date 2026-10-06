@@ -21,6 +21,7 @@ El usuario debe ver que si cumple con el objetivo diario una felicitación
 
 El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
 
+
 PARA UN MVP QUIERO:
 	Persistencia , me molaria usarlo ya de forma personal h
 	Frontend UI5 básico h
