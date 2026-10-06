@@ -15,6 +15,10 @@ public class HabitResponse {
     private int streak;
     private double totalExperience;
     private LocalDate creationDate;
+    private boolean objectiveMetToday;
+    private int remainingMinutesToday;
+    private int minutesDoneToday;
+
 
     public HabitResponse(Habit habit) {
         this.id = habit.getId();
@@ -24,6 +28,10 @@ public class HabitResponse {
         this.streak = habit.getStreak();
         this.totalExperience = habit.getTotalExperience();
         this.creationDate = habit.getCreationDate();
+        this.objectiveMetToday = habit.metObjectiveOn(LocalDate.now());
+        this.remainingMinutesToday = habit.remainingMinutesOn(LocalDate.now());
+        this.minutesDoneToday = habit.minutesDoneOn(LocalDate.now());
+
     }
 
     // getters
@@ -34,4 +42,8 @@ public class HabitResponse {
     public int getStreak() { return streak; }
     public double getTotalExperience() { return totalExperience; }
     public LocalDate getCreationDate() { return creationDate; }
+    public boolean isObjectiveMetToday() { return objectiveMetToday; }
+    public int getRemainingMinutesToday() { return remainingMinutesToday; }
+    public int getMinutesDoneToday() { return minutesDoneToday; }
+
 }

@@ -6,8 +6,10 @@
         <content>
             <VBox class="sapUiMediumMargin">
                 <Text text="Stage: {/growthStage}"/>
-                <Text text="XP: {/totalExperience}"/>
+                <Text text="XP: {= Math.round(${/totalExperience})}"/>
                 <Text text="Day Streak: {/streak}"/>
+                <Text text="Daily Objetive Time : {/dailyObjectiveTime}"/>
+                <Text text="Today: {/minutesDoneToday} min of {/dailyObjectiveTime} min"/>
                 <Button text="Water" icon="sap-icon://watering-can" type="Emphasized" press=".onOpenWaterDialog" class="sapUiSmallMarginTop"/>
                 <Text text="Last 7 days" class="sapUiSmallMarginTop sapUiMediumMarginBottom"/>
                 <List items="{weekly>/}">

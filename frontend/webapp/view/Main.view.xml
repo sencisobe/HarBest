@@ -26,7 +26,7 @@
 					<HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
 						<VBox>
 							<Text text="{name}"/>
-							<Text text="{growthStage} - {totalExperience} XP"/>
+							<Text text="{growthStage} - {= Math.round(${totalExperience})} XP"/>
 						</VBox>
 						<Button icon="sap-icon://delete" press="onDeleteHabit" type="Reject"/>
 					</HBox>

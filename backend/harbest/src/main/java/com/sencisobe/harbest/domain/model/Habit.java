@@ -78,6 +78,12 @@ public void waterRegister(Water water, double growthPoints) {
     updateStreak(water, totalTodayBefore);
     updateGrowthStage();
 }
+public int minutesDoneOn(LocalDate date) {
+    return waterHistory.stream()
+            .filter(w -> w.getDate().equals(date))
+            .mapToInt(Water::getDuration)
+            .sum();
+}
 public boolean metObjectiveOn(LocalDate date) {
     int total = waterHistory.stream()
             .filter(w -> w.getDate().equals(date))
