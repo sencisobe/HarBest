@@ -21,6 +21,42 @@ El usuario debe ver que si cumple con el objetivo diario una felicitación
 
 El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
 
+	Implementacion vista:
+		¿que es un evolutivo exactamente?
+			- Si quiero mejorar la vista que es?
+				"Poner una barra de carga estetica"?
+
+Para el sprint:
+	Cada historia a implementar:
+	1. Criterios de aceptacion
+	2.Tener en cuenta la prioridad
+
+NUEVO SPRINT 2 -> Sistema multiusuario
+	Se podra crear una cuenta con un correo -> usuario , contraseña
+		Resetear contraseña mediante correo
+	Cada Usuario tendrá sus habitos , y cada habito su progreso
+	Poder probarlo en mi red local (¿debo abrir acceso a red internet y hostear yo para lo del correo?)
+5. Migrate existing habits. As the developer, I want existing habits to survive the schema change.
+
+ Existing habits are assigned to a user or removed, with the decision documented
+ The app starts cleanly on the migrated database
+
+6. Password reset by email. As a user, I want to reset my password through my email, so that I can recover my account.
+
+ Requesting a reset gives the same response whether or not the email exists
+ The email contains a link with a single-use token that expires (e.g. 30 min), stored hashed
+ The new password is validated like in registration; the old one stops working
+ Works locally with Mailpit and is configurable for a real SMTP
+
+7. Run on local network. As the developer, I want to open the app from another device on my network, so that I can test it like a real user.
+
+ API base URL, CORS origins and frontend URL are configurable, with no hardcoded localhost
+ The app works from a phone or another PC on the same network
+ The README documents the steps
+
+Dos notas de diseño. La historia 5 es fácil de olvidar y rompe el arranque: añadir una clave foránea obligatoria a una tabla con filas existentes falla. Y la elección entre JWT y sesión conviene dejarla escrita como decisión del sprint (un ADR corto en docs/), porque define cómo se implementan las historias 2 y 4.
+
+El orden de ejecución natural es 1 → 2 → 3 → 5 → 4, y después 6 y 7. Si quieres, lo dejo como docs/sprints/sprint-2.md con la Definition of Done al final.
 
 PARA UN MVP QUIERO:
 	Persistencia , me molaria usarlo ya de forma personal h
