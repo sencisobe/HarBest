@@ -8,8 +8,16 @@
                 <Text text="Stage: {/growthStage}"/>
                 <Text text="XP: {= Math.round(${/totalExperience})}"/>
                 <Text text="Day Streak: {/streak}"/>
-                <Text text="Daily Objetive Time : {/dailyObjectiveTime}"/>
-                <Text text="Today: {/minutesDoneToday} min of {/dailyObjectiveTime} min"/>
+                <Text text="Daily Objetive Time : {/dailyObjectiveTime} min"/>
+                <ProgressIndicator
+                percentValue="{= Math.min(100, ${/minutesDoneToday} / ${/dailyObjectiveTime} * 100)}"
+                displayValue="{/minutesDoneToday} / {/dailyObjectiveTime} min"
+                state="{= ${/minutesDoneToday} >= ${/dailyObjectiveTime} ? 'Success' : 'Information'}"
+                showValue="true"
+                width="80%"
+                class="sapUiSmallMarginTop"/>
+
+                <Text text="{= ${/minutesDoneToday} >= ${/dailyObjectiveTime} ? 'Objective completed today ✓' : 'Objective not completed yet'}"/>
                 <Button text="Water" icon="sap-icon://watering-can" type="Emphasized" press=".onOpenWaterDialog" class="sapUiSmallMarginTop"/>
                 <Text text="Last 7 days" class="sapUiSmallMarginTop sapUiMediumMarginBottom"/>
                 <List items="{weekly>/}">
