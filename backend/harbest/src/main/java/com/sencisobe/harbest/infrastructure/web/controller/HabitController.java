@@ -3,6 +3,7 @@ package com.sencisobe.harbest.infrastructure.web.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,36 +52,38 @@ public class HabitController {
         this.getWeeklyProgress = getWeeklyProgress;
     }
 
-    @PostMapping
-    public HabitResponse create(@Valid @RequestBody CreateHabitRequest request) {
-        Habit habit = createHabit.execute(request.getName(), request.getDailyObjectiveTime());
-        return new HabitResponse(habit);
-    }
+@PostMapping
+public HabitResponse create(@AuthenticationPrincipal Long userId,
+                            @Valid @RequestBody CreateHabitRequest request) {
+    Habit habit = createHabit.execute(userId, request.getName(), request.getDailyObjectiveTime());
+    return new HabitResponse(habit);
+}
 
-    @PostMapping("/{id}/water")
-    public WaterResponse water(@PathVariable Long id, @Valid @RequestBody RegisterWaterRequest request) {
-        Water water = new Water(request.getDuration());
-        WaterResult result = registerWater.execute(id, water);
-        return new WaterResponse(result.getHabit(), result.isObjectiveMetToday(), result.getRemainingMinutesToday());
-    }
-    @GetMapping("/{id}")
-        public HabitResponse getById(@PathVariable Long id) {
-        Habit habit = getHabitById.execute(id);
-        return new HabitResponse(habit);
-    }
+@PostMapping("/{id}/water")
+public WaterResponse water(@AuthenticationPrincipal Long userId, @PathVariable Long id,
+                           @Valid @RequestBody RegisterWaterRequest request) {
+    Water water = new Water(request.getDuration());
+    WaterResult result = registerWater.execute(userId, id, water);
+    return new WaterResponse(result.getHabit(), result.isObjectiveMetToday(), result.getRemainingMinutesToday());
+}
 
-    @GetMapping
-    public List<HabitResponse> list() {
-        return listHabits.execute().stream()
-                .map(HabitResponse::new)
-                .toList();
-    }
-    @GetMapping("/{id}/weekly-progress")
-    public List<DailyProgress> weeklyProgress(@PathVariable Long id) {
-        return getWeeklyProgress.execute(id);
-    }
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        deleteHabit.execute(id);
+@GetMapping("/{id}")
+public HabitResponse getById(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    return new HabitResponse(getHabitById.execute(userId, id));
+}
+
+@GetMapping
+public List<HabitResponse> list(@AuthenticationPrincipal Long userId) {
+    return listHabits.execute(userId).stream().map(HabitResponse::new).toList();
+}
+
+@GetMapping("/{id}/weekly-progress")
+public List<DailyProgress> weeklyProgress(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    return getWeeklyProgress.execute(userId, id);
+}
+
+@DeleteMapping("/{id}")
+public void delete(@AuthenticationPrincipal Long userId, @PathVariable Long id) {
+    deleteHabit.execute(userId, id);
 }
 }

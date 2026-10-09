@@ -12,7 +12,7 @@ public class DeleteHabit {
         this.habitRepository = habitRepository;
     }
 
-    public void execute(Long habitId) {
-        habitRepository.deleteById(habitId);
+    public void execute(Long userId, Long habitId) {
+        habitRepository.deleteByIdAndUserId(userId,habitId);
     }
 }

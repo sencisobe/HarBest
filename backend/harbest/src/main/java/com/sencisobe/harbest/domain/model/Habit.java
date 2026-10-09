@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class Habit {
         private static final Logger log = LoggerFactory.getLogger(Habit.class);
 
+        private long userId;
         private Long id;
         private String name;
         private int dailyObjectiveTime;
@@ -24,7 +25,8 @@ public class Habit {
         private LocalDate creationDate;
         private double totalExperience;
 
-    public Habit(String name, int dailyObjectiveTime){
+    public Habit(Long userId, String name, int dailyObjectiveTime){
+    if (userId==null) throw new InvalidHabitDataException("userId is required");
         if (dailyObjectiveTime <= 0) {
         throw new InvalidHabitDataException("dailyObjectiveTime must be positive");
     }
@@ -38,8 +40,9 @@ public class Habit {
 
     }
     // For Persistency
-    public Habit(Long id, String name, int dailyObjectiveTime, GrowthStage growthStage,
+    public Habit(Long userId, Long id, String name, int dailyObjectiveTime, GrowthStage growthStage,
                 int streak, double totalExperience, List<Water> waterHistory, LocalDate creationDate) {
+       this.userId = userId;
         this.id = id;
         this.name = name;
         this.dailyObjectiveTime = dailyObjectiveTime;
@@ -135,6 +138,12 @@ boolean wateredYesterday = waterHistory.stream()
 }
 
     // GETTERS
+
+
+public Long getUserId() {
+     return userId;
+}
+
 public Long getId() {
     return id;
 }

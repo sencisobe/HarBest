@@ -16,12 +16,12 @@ public class CreateHabit {
         this.habitRepository = habitRepository;
     }
 
-public Habit execute(String name, int dailyObjectiveTime) {
+public Habit execute(Long userId, String name, int dailyObjectiveTime) {
     String cleanName = name.trim();
-    if (habitRepository.existsByName(cleanName)) {
+    if (habitRepository.existsByUserIdAndName(userId, cleanName)) {
         throw new DuplicateHabitNameException(cleanName);
     }
-    Habit habit = new Habit(cleanName, dailyObjectiveTime);
+    Habit habit = new Habit(userId, cleanName, dailyObjectiveTime);
     return habitRepository.save(habit);
 }
     

@@ -22,8 +22,8 @@ public class RegisterWater {
         this.growthCalculator = growthCalculator;
     }
 
-public WaterResult execute(Long habitId, Water water) {
-    Habit habit = habitRepository.findById(habitId)
+public WaterResult execute(Long userId,Long habitId, Water water) {
+    Habit habit = habitRepository.findByUserIdAndId(userId, habitId)
             .orElseThrow(() -> new HabitNotFoundException(habitId));
 
     double growthPoints = growthCalculator.calculateGrowthPoints(water, habit.getStreak());

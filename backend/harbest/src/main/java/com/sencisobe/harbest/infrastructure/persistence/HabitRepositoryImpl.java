@@ -6,6 +6,9 @@ import com.sencisobe.harbest.domain.model.Water;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 import com.sencisobe.harbest.infrastructure.persistence.entity.HabitEntity;
 import com.sencisobe.harbest.infrastructure.persistence.entity.WaterEntity;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,23 +30,31 @@ public class HabitRepositoryImpl implements HabitRepository {
         return toDomain(saved);
     }
 
-    @Override
-    public Optional<Habit> findById(Long id) {
-        return jpaRepository.findById(id).map(this::toDomain);
-    }
+@Override
+public Optional<Habit> findByUserIdAndId(Long userId, Long id) {
+    return jpaRepository.findByUserIdAndId(userId, id).map(this::toDomain);
+}
 
-    @Override
-    public List<Habit> findAll() {
-        return jpaRepository.findAll().stream().map(this::toDomain).toList();
-    }
-    
-     @Override
-    public void deleteById(Long id) {
-        jpaRepository.deleteById(id);
-    }
+
+@Override
+public List<Habit> findAllByUserId(Long userId) {
+    return jpaRepository.findAllByUserId(userId).stream().map(this::toDomain).toList();
+}
+
+@Override
+@Transactional
+public void deleteByUserIdAndId(Long userId, Long id) {
+    jpaRepository.deleteByUserIdAndId(userId, id);
+}
+
+@Override
+public boolean existsByUserIdAndName(Long userId, String name) {
+    return jpaRepository.existsByUserIdAndNameIgnoreCase(userId, name);
+}
 
     private HabitEntity toEntity(Habit habit) {
         HabitEntity entity = new HabitEntity(
+                habit.getUserId(),
                 habit.getName(),
                 habit.getDailyObjectiveTime(),
                 habit.getGrowthStage(),
@@ -60,16 +71,13 @@ public class HabitRepositoryImpl implements HabitRepository {
 
         return entity;
     }
-    @Override
-    public boolean existsByName(String name) {
-        return jpaRepository.existsByNameIgnoreCase(name);
-    }
     private Habit toDomain(HabitEntity entity) {
         List<Water> waters = entity.getWaterHistory().stream()
                 .map(w -> new Water(w.getDate(), w.getDuration()))
                 .toList();
 
         return new Habit(
+                entity.getUserId(),
                 entity.getId(),
                 entity.getName(),
                 entity.getDailyObjectiveTime(),

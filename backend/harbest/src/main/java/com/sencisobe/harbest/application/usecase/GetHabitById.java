@@ -17,8 +17,8 @@ public class GetHabitById {
         this.habitRepository = habitRepository;
     }
 
-    public Habit execute(Long habitId) {
-        return habitRepository.findById(habitId)
+    public Habit execute(Long userId,Long habitId) {
+        return habitRepository.findByIdAndUserId(userId,habitId)
                 .orElseThrow(() ->  new HabitNotFoundException(habitId));
     }
 }

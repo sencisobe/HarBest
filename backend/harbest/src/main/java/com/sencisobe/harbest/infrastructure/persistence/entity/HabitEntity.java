@@ -11,6 +11,8 @@ import java.util.List;
 @Table(name = "habits")
 
 public class HabitEntity {
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +35,9 @@ public class HabitEntity {
         // constructor vacío requerido por JPA
     }
 
-    public HabitEntity(String name, int dailyObjectiveTime, GrowthStage growthStage,
-                        int streak, double totalExperience, LocalDate creationDate) {
-        this.name = name;
+    public HabitEntity(Long userId, String name, int dailyObjectiveTime, GrowthStage growthStage,
+                   int streak, double totalExperience, LocalDate creationDate) {
+        this.userId = userId;
         this.dailyObjectiveTime = dailyObjectiveTime;
         this.growthStage = growthStage;
         this.streak = streak;
@@ -43,7 +45,8 @@ public class HabitEntity {
         this.creationDate = creationDate;
     }
 
-   public Long getId() {
+public Long getUserId() { return userId; }
+public Long getId() {
     return id;
 }
 

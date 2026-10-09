@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public interface HabitRepository {
     Habit save(Habit habit);
-    Optional<Habit> findById(Long id);
-    List<Habit> findAll();
-    void deleteById(Long id);
-    boolean existsByName(String name);
+    Optional<Habit> findByUserIdAndId(Long userId, Long id);
+    List<Habit> findAllByUserId(Long userId);
+    void deleteByUserIdAndId(Long userId, Long id);
+    boolean existsByUserIdAndName(Long userId, String name);
 }

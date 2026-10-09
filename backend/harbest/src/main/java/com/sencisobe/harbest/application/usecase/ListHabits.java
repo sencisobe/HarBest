@@ -17,7 +17,7 @@ public class ListHabits {
         this.habitRepository = habitRepository;
     }
 
-    public List<Habit> execute() {
-        return habitRepository.findAll();
+    public List<Habit> execute(Long userId) {
+        return habitRepository.findAllByUserId(userId);
     }
 }
