@@ -18,21 +18,21 @@ class GetWeeklyProgressTest {
     private final LocalDate today = LocalDate.now();
     private GetWeeklyProgress useCaseWith(Water... waters) {
         FakeHabitRepository repo = new FakeHabitRepository();
-        repo.save(new Habit(1L, "Leer", 30, GrowthStage.SPROUT, 0, 0.0,
+        repo.save(new Habit(1L,1L, "Leer", 30, GrowthStage.SPROUT, 0, 0.0,
                 List.of(waters), today.minusDays(30)));
         return new GetWeeklyProgress(repo);
     }
 
     @Test
     void siempreDevuelveSieteDias() {
-        List<DailyProgress> result = useCaseWith().execute(1L);
+        List<DailyProgress> result = useCaseWith().execute(1L,1L);
 
         assertEquals(7, result.size());
     }
 
     @Test
     void ordenCronologicoTerminandoHoy() {
-        List<DailyProgress> result = useCaseWith().execute(1L);
+        List<DailyProgress> result = useCaseWith().execute(1L,1L);
 
         assertEquals(today.minusDays(6), result.get(0).getDate());
         assertEquals(today, result.get(6).getDate());
@@ -40,7 +40,7 @@ class GetWeeklyProgressTest {
 
     @Test
     void diasSinRiegoTienenDuracionCero() {
-        List<DailyProgress> result = useCaseWith().execute(1L);
+        List<DailyProgress> result = useCaseWith().execute(1L,1L);
 
         assertTrue(result.stream().allMatch(d -> d.getDuration() == 0));
     }
@@ -50,7 +50,7 @@ class GetWeeklyProgressTest {
         List<DailyProgress> result = useCaseWith(
                 new Water(today, 30),
                 new Water(today.minusDays(2), 20)
-        ).execute(1L);
+        ).execute(1L,1L);
 
         assertEquals(30, result.get(6).getDuration()); // hoy
         assertEquals(20, result.get(4).getDuration()); // hace 2 dias
@@ -62,7 +62,7 @@ class GetWeeklyProgressTest {
         List<DailyProgress> result = useCaseWith(
                 new Water(today.minusDays(6), 15), // dentro
                 new Water(today.minusDays(7), 99)  // fuera
-        ).execute(1L);
+        ).execute(1L,1L);
 
         assertEquals(15, result.get(0).getDuration());
         assertTrue(result.stream().noneMatch(d -> d.getDuration() == 99));
@@ -72,6 +72,6 @@ class GetWeeklyProgressTest {
     void habitoInexistenteLanzaExcepcion() {
         GetWeeklyProgress useCase = new GetWeeklyProgress(new FakeHabitRepository());
 
-         assertThrows(HabitNotFoundException.class, () -> useCase.execute(999L));
+         assertThrows(HabitNotFoundException.class, () -> useCase.execute(999L,999L));
     }
 }

@@ -15,7 +15,7 @@ class HabitTest {
 
     @Test
     void diasConsecutivosIncrementanStreak() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
         LocalDate day1 = LocalDate.of(2026, 1, 1);
         LocalDate day2 = LocalDate.of(2026, 1, 2);
         LocalDate day3 = LocalDate.of(2026, 1, 3);
@@ -29,7 +29,7 @@ class HabitTest {
 
     @Test
     void saltarUnDiaReduceStreakALaMitad() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
         LocalDate day1 = LocalDate.of(2026, 1, 1);
         LocalDate day2 = LocalDate.of(2026, 1, 2);
         LocalDate day3 = LocalDate.of(2026, 1, 3);
@@ -49,7 +49,7 @@ class HabitTest {
 
     @Test
     void variosRiegosMismoDiaSeSumanYCuentanUnaVezElStreak() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
         LocalDate day1 = LocalDate.of(2026, 1, 1);
 
         habit.waterRegister(new Water(day1, 15), 15.0); // no llega a 30, streak no sube
@@ -61,7 +61,7 @@ class HabitTest {
     }
       @Test
     void dayWaterIsNotEnoughForStreak() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
         LocalDate day1 = LocalDate.of(2026, 1, 1);
 
         habit.waterRegister(new Water(day1, 15), 15.0); // no llega a 30, streak no sube
@@ -73,7 +73,7 @@ class HabitTest {
 
         @Test
     void diaParcialNoCuentaComoDiaAnteriorParaLaRacha() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 30);
         habit.waterRegister(new Water(D2, 30), 30); // streak 2
@@ -87,7 +87,7 @@ class HabitTest {
     // ---- Experiencia ----
     @Test
     void experienciaSeAcumulaEntreRiegos() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 30.0);
         habit.waterRegister(new Water(D2, 30), 31.0);
@@ -97,7 +97,7 @@ class HabitTest {
 
     @Test
     void experienciaSeSumaEnRiegosDelMismoDia() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 15), 15.0);
         habit.waterRegister(new Water(D1, 20), 20.0);
@@ -108,7 +108,7 @@ class HabitTest {
 
     @Test
     void riegoParcialTambienDaExperiencia() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 10), 10.0);
 
@@ -118,7 +118,7 @@ class HabitTest {
 
   @Test
     void justoDebajoDelUmbralSigueSiendoSprout() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 209);
 
@@ -127,7 +127,7 @@ class HabitTest {
 
     @Test
     void alcanzarUmbralPasaAHalfTree() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 210);
 
@@ -136,7 +136,7 @@ class HabitTest {
 
     @Test
     void justoDebajoDelUmbralDeArbolSigueSiendoHalfTree() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 899);
 
@@ -145,7 +145,7 @@ class HabitTest {
 
     @Test
     void alcanzarUmbralPasaATree() {
-        Habit habit = new Habit("Leer", 30);
+        Habit habit = new Habit(1L,"Leer", 30);
 
         habit.waterRegister(new Water(D1, 30), 900);
 

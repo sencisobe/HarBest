@@ -17,21 +17,26 @@ public class FakeHabitRepository implements HabitRepository {
     }
 
     @Override
-    public Optional<Habit> findById(Long id) {
-        return Optional.ofNullable(store.get(id));
+    public Optional<Habit> findByUserIdAndId(Long userId, Long id) {
+        return Optional.ofNullable(store.get(id))
+                .filter(h -> h.getUserId().equals(userId));
     }
 
     @Override
-    public List<Habit> findAll() {
-        return new ArrayList<>(store.values());
+    public List<Habit> findAllByUserId(Long userId) {
+        return store.values().stream()
+                .filter(h -> h.getUserId().equals(userId))
+                .toList();
     }
 
     @Override
-    public void deleteById(Long id) {
-        store.remove(id);
+    public void deleteByUserIdAndId(Long userId, Long id) {
+        findByUserIdAndId(userId, id).ifPresent(h -> store.remove(id));
     }
-        @Override
-    public boolean existsByName(String name) {
-        return store.values().stream().anyMatch(h -> h.getName().equalsIgnoreCase(name));
+
+    @Override
+    public boolean existsByUserIdAndName(Long userId, String name) {
+        return store.values().stream()
+                .anyMatch(h -> h.getUserId().equals(userId) && h.getName().equalsIgnoreCase(name));
     }
 }

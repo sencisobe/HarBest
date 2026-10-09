@@ -30,7 +30,7 @@ class RegisterWaterTest {
     }
 
     private Habit savedHabit(int streak, double xp) {
-        return repo.save(new Habit(1L, "Leer", 30, GrowthStage.SPROUT,
+        return repo.save(new Habit(1L,1L, "Leer", 30, GrowthStage.SPROUT,
                 streak, xp, new ArrayList<>(), DAY.minusDays(30)));
     }
 
@@ -38,7 +38,7 @@ class RegisterWaterTest {
     void riegoSinRachaSumaLaDuracionComoXp() {
         savedHabit(0, 0.0);
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 30));
 
         assertEquals(30.0, result.getHabit().getTotalExperience(), 0.001);
     }
@@ -47,7 +47,7 @@ class RegisterWaterTest {
     void laRachaActualAplicaMultiplicadorAlXp() {
         savedHabit(10, 0.0); // streak 10 -> x1.2
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 30));
 
         assertEquals(36.0, result.getHabit().getTotalExperience(), 0.001);
     }
@@ -56,7 +56,7 @@ class RegisterWaterTest {
     void cumplirObjetivoIncrementaLaRacha() {
         savedHabit(0, 0.0);
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 30));
 
         assertEquals(1, result.getHabit().getStreak());
     }
@@ -65,9 +65,9 @@ class RegisterWaterTest {
     void elResultadoQuedaGuardadoEnElRepositorio() {
         savedHabit(0, 0.0);
 
-        useCase.execute(1L, new Water(DAY, 30));
+        useCase.execute(1L,1L, new Water(DAY, 30));
 
-        Habit stored = repo.findById(1L).orElseThrow();
+        Habit stored = repo.findByUserIdAndId(1L,1L).orElseThrow();
         assertEquals(1, stored.getWaterHistory().size());
         assertEquals(30.0, stored.getTotalExperience(), 0.001);
     }
@@ -76,7 +76,7 @@ class RegisterWaterTest {
     void superarElUmbralHaceEvolucionarElHabito() {
         savedHabit(0, 200.0); // HALF_TREE empieza en 210
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 30)); // 230
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 30)); // 230
 
         assertEquals(GrowthStage.HALF_TREE, result.getHabit().getGrowthStage());
     }
@@ -85,8 +85,8 @@ class RegisterWaterTest {
     void dosRiegosElMismoDiaSeFusionan() {
         savedHabit(0, 0.0);
 
-        useCase.execute(1L, new Water(DAY, 15));
-        WaterResult result = useCase.execute(1L, new Water(DAY, 20));
+        useCase.execute(1L,1L, new Water(DAY, 15));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 20));
 
         assertEquals(1, result.getHabit().getWaterHistory().size());
         assertEquals(35, result.getHabit().getWaterHistory().get(0).getDuration());
@@ -96,7 +96,7 @@ class RegisterWaterTest {
     @Test
     void habitoInexistenteLanzaExcepcion() {
         assertThrows(HabitNotFoundException.class,
-                () -> useCase.execute(999L, new Water(DAY, 30)));
+                () -> useCase.execute(999L,999L, new Water(DAY, 30)));
     }
 
     // --- Nuevos: cobertura de objectiveMetToday / remainingMinutesToday ---
@@ -105,7 +105,7 @@ class RegisterWaterTest {
     void noCumpleObjetivoIndicaMinutosRestantes() {
         savedHabit(0, 0.0);
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 10)); // objetivo 30
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 10)); // objetivo 30
 
         assertFalse(result.isObjectiveMetToday());
         assertEquals(20, result.getRemainingMinutesToday());
@@ -115,7 +115,7 @@ class RegisterWaterTest {
     void cumpleObjetivoNoDejaMinutosRestantes() {
         savedHabit(0, 0.0);
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 30));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 30));
 
         assertTrue(result.isObjectiveMetToday());
         assertEquals(0, result.getRemainingMinutesToday());
@@ -124,7 +124,7 @@ class RegisterWaterTest {
     void cumpleObjetivoNoDejaMinutosRestantesSobrado() {
         savedHabit(0, 0.0);
 
-        WaterResult result = useCase.execute(1L, new Water(DAY, 60));
+        WaterResult result = useCase.execute(1L,1L, new Water(DAY, 60));
 
         assertTrue(result.isObjectiveMetToday());
         assertEquals(0, result.getRemainingMinutesToday());
