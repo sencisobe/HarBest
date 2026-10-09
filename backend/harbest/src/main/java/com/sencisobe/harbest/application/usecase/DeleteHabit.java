@@ -13,6 +13,6 @@ public class DeleteHabit {
     }
 
     public void execute(Long userId, Long habitId) {
-        habitRepository.deleteByIdAndUserId(userId,habitId);
+        habitRepository.deleteByUserIdAndId(userId,habitId);
     }
 }

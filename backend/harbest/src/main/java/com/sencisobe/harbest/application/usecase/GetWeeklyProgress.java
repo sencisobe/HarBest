@@ -32,7 +32,7 @@ public class GetWeeklyProgress {
     public List<DailyProgress> execute(Long userId, Long habitId) {
         log.info("Consultando progreso semanal del hábito {}", habitId);
 
-        Habit habit = habitRepository.findByIdAndUserId(userId,habitId)
+        Habit habit = habitRepository.findByUserIdAndId(userId,habitId)
                 .orElseThrow(() -> {
                     log.warn("Progreso semanal: hábito {} no encontrado", habitId);
                     return new HabitNotFoundException(habitId);
