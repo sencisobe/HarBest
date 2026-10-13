@@ -5,28 +5,31 @@ import com.sencisobe.harbest.domain.model.Habit;
 import com.sencisobe.harbest.domain.repository.HabitRepository;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class FakeHabitRepository implements HabitRepository {
 
     private final Map<Long, Habit> store = new HashMap<>();
+    private final AtomicLong sequence = new AtomicLong(1);
 
     @Override
     public Habit save(Habit habit) {
-        store.put(habit.getId(), habit);
-        return habit;
+        Long id = habit.getId() != null ? habit.getId() : sequence.getAndIncrement();
+        Habit saved = new Habit(id, habit.getUserId(), habit.getName(), habit.getDailyObjectiveTime(),
+                habit.getGrowthStage(), habit.getStreak(), habit.getTotalExperience(),
+                habit.getWaterHistory(), habit.getCreationDate());
+        store.put(id, saved);
+        return saved;
     }
 
     @Override
     public Optional<Habit> findByUserIdAndId(Long userId, Long id) {
-        return Optional.ofNullable(store.get(id))
-                .filter(h -> h.getUserId().equals(userId));
+        return Optional.ofNullable(store.get(id)).filter(h -> h.getUserId().equals(userId));
     }
 
     @Override
     public List<Habit> findAllByUserId(Long userId) {
-        return store.values().stream()
-                .filter(h -> h.getUserId().equals(userId))
-                .toList();
+        return store.values().stream().filter(h -> h.getUserId().equals(userId)).toList();
     }
 
     @Override

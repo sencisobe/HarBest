@@ -1,5 +1,7 @@
 package com.sencisobe.harbest.application.usecase;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
@@ -10,6 +12,8 @@ import com.sencisobe.harbest.domain.service.TokenProvider;
 
 @Service
 public class LoginUser {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginUser.class);
 
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
@@ -24,7 +28,11 @@ public class LoginUser {
     public String execute(String email, String rawPassword) {
         User user = userRepository.findByEmail(email.trim().toLowerCase())
                 .filter(u -> passwordHasher.matches(rawPassword, u.getPasswordHash()))
-                .orElseThrow(InvalidCredentialsException::new);
+                .orElseThrow(() -> {
+                    log.warn("Login fallido");
+                    return new InvalidCredentialsException();
+                });
+        log.info("Login correcto: userId={}", user.getId());
         return tokenProvider.generate(user.getId());
     }
 }

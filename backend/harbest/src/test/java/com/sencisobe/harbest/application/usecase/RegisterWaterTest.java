@@ -129,4 +129,5 @@ class RegisterWaterTest {
         assertTrue(result.isObjectiveMetToday());
         assertEquals(0, result.getRemainingMinutesToday());
     }
+    
 }

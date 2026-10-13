@@ -1,0 +1,41 @@
+package com.sencisobe.harbest.application.usecase;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
+import com.sencisobe.harbest.support.FakePasswordHasher;
+import com.sencisobe.harbest.support.FakeTokenProvider;
+import com.sencisobe.harbest.support.FakeUserRepository;
+
+public class LoginUserTest {
+
+    private final FakeUserRepository users = new FakeUserRepository();
+    private final FakePasswordHasher hasher = new FakePasswordHasher();
+    private final LoginUser loginUser = new LoginUser(users, hasher, new FakeTokenProvider());
+
+    @BeforeEach
+    void setUp() {
+        new RegisterUser(users, hasher).execute("a@x.com", "12345678");
+    }
+
+    @Test
+    void returnsTokenWithValidCredentials() {
+        assertEquals("token-1", loginUser.execute("a@x.com", "12345678"));
+    }
+
+    @Test
+    void rejectsWrongPassword() {
+        assertThrows(InvalidCredentialsException.class,
+                () -> loginUser.execute("a@x.com", "incorrecta"));
+    }
+
+    @Test
+    void rejectsUnknownEmailWithSameException() {
+        assertThrows(InvalidCredentialsException.class,
+                () -> loginUser.execute("nadie@x.com", "12345678"));
+    }
+}
