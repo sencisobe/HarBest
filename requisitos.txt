@@ -36,10 +36,8 @@ NUEVO SPRINT 2 -> Sistema multiusuario
 		Resetear contraseña mediante correo
 	Cada Usuario tendrá sus habitos , y cada habito su progreso
 	Poder probarlo en mi red local (¿debo abrir acceso a red internet y hostear yo para lo del correo?)
-5. Migrate existing habits. As the developer, I want existing habits to survive the schema change.
 
- Existing habits are assigned to a user or removed, with the decision documented
- The app starts cleanly on the migrated database
+
 
 6. Password reset by email. As a user, I want to reset my password through my email, so that I can recover my account.
 
