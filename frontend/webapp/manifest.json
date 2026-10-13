@@ -79,6 +79,11 @@
 					"pattern": "habit/{habitId}",
 					"name": "habitDetail",
 					"target": "habitDetail"
+				},
+				{
+					"pattern": "login",
+					"name": "login",
+					"target": "login"
 				}
 			],
 			"targets": {
@@ -89,6 +94,10 @@
 				 "habitDetail": {
 					"viewId": "habitDetail",
 					"viewName": "HabitDetail"
+				},
+				"login": {
+					"id": "login",
+					"name": "Login"
 				}
 			}
 		}

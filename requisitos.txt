@@ -56,6 +56,10 @@ Dos notas de diseño. La historia 5 es fácil de olvidar y rompe el arranque: a�
 
 El orden de ejecución natural es 1 → 2 → 3 → 5 → 4, y después 6 y 7. Si quieres, lo dejo como docs/sprints/sprint-2.md con la Definition of Done al final.
 
+--------------------------------------
+	Necesitamos una pantalla para el login/register
+
+
 PARA UN MVP QUIERO:
 	Persistencia , me molaria usarlo ya de forma personal h
 	Frontend UI5 básico h
