@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken(userId, null, List.of()));
             } catch (JwtException | IllegalArgumentException e) {
-                // token inválido o caducado: sin autenticación, el entry point responderá 401
+                logger.warn("JWT rechazado: " + e.getMessage());
             }
         }
         chain.doFilter(request, response);

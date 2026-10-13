@@ -38,6 +38,7 @@ public class HabitEntity {
     public HabitEntity(Long userId, String name, int dailyObjectiveTime, GrowthStage growthStage,
                    int streak, double totalExperience, LocalDate creationDate) {
         this.userId = userId;
+        this.name = name;
         this.dailyObjectiveTime = dailyObjectiveTime;
         this.growthStage = growthStage;
         this.streak = streak;

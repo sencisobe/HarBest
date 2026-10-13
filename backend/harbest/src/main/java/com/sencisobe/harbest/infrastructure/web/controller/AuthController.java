@@ -15,7 +15,7 @@ import com.sencisobe.harbest.infrastructure.web.dto.TokenResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
     private final RegisterUser registerUser;
     private final LoginUser loginUser;

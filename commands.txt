@@ -4,6 +4,8 @@ harbest\HarBest\backend\harbest> .\mvnw test
 
 harbest\HarBest\backend\harbest> .\mvnw spring-boot:run    
 
+Recuerda que me debo crear un token para inicio sesion
+
 FRONTEND : npm start
 
 Do not forget to deply the Database :D

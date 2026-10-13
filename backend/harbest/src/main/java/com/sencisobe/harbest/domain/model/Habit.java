@@ -30,6 +30,7 @@ public class Habit {
         if (dailyObjectiveTime <= 0) {
         throw new InvalidHabitDataException("dailyObjectiveTime must be positive");
     }
+        this.userId = userId;
         this.name = name;
         this.dailyObjectiveTime= dailyObjectiveTime;
         this.growthStage= GrowthStage.SPROUT;
