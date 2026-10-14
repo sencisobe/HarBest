@@ -60,6 +60,8 @@ El orden de ejecución natural es 1 → 2 → 3 → 5 → 4, y después 6 y 7. S
 	Necesitamos una pantalla para el login/register
 		El register deberia pedirte multiples cosas:
 			Nombre de usuario para poder hacer login
+	Manera de cerrar sesión comodamente
+	Que se vea el nombre del usuario en pantalla main
 	
 
 PARA UN MVP QUIERO:

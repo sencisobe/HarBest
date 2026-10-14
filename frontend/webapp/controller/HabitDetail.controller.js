@@ -1,5 +1,5 @@
-sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment" ,"sap/m/MessageBox"], function (BaseController, JSONModel,  Fragment, MessageBox) {
-    "use strict";
+sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment", "sap/m/MessageBox", "harbest/service/api"],
+function (BaseController, JSONModel, Fragment, MessageBox, api) {    "use strict";
 
     return BaseController.extend("harbest.controller.HabitDetail", {
         onInit: function () {
@@ -7,17 +7,23 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/F
         },
 
         _onRouteMatched: function (oEvent) {
-            var sHabitId = oEvent.getParameter("arguments").habitId;
-            this._sHabitId = sHabitId;
+                var sHabitId = oEvent.getParameter("arguments").habitId;
+                this._sHabitId = sHabitId;
 
-            var oModel = new JSONModel();
-            oModel.loadData("http://localhost:8081/habits/" + sHabitId);
-            this.getView().setModel(oModel);
+                var oModel = new JSONModel();
+                var oWeeklyModel = new JSONModel();
+                this.getView().setModel(oModel);
+                this.getView().setModel(oWeeklyModel, "weekly");
 
-            var oWeeklyModel = new JSONModel();
-            oWeeklyModel.loadData("http://localhost:8081/habits/" + sHabitId + "/weekly-progress");
-            this.getView().setModel(oWeeklyModel, "weekly");
-        },
+                api("/habits/" + sHabitId).then(h => oModel.setData(h)).catch(() => {});
+                this._loadWeekly();
+            },
+
+            _loadWeekly: function () {
+                return api("/habits/" + this._sHabitId + "/weekly-progress")
+                    .then(w => this.getView().getModel("weekly").setData(w))
+                    .catch(() => {});
+            },
             onOpenWaterDialog: function () {
             if (!this._oWaterDialog) {
                 Fragment.load({
@@ -39,43 +45,29 @@ sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/F
         },
 
         onConfirmWaterHabit: function () {
-            var iDuration = parseInt(this.byId("waterDurationInput").getValue(), 10);
-            var sHabitId = this._sHabitId;
-            var that = this;
-            var oModel = this.getView().getModel();
-            var bWasMetBefore = oModel.getProperty("/minutesDoneToday") >= oModel.getProperty("/dailyObjectiveTime");
+        var iDuration = parseInt(this.byId("waterDurationInput").getValue(), 10);
+        var oModel = this.getView().getModel();
+        var bWasMetBefore = oModel.getProperty("/minutesDoneToday") >= oModel.getProperty("/dailyObjectiveTime");
 
-            fetch("http://localhost:8081/habits/" + sHabitId + "/water", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ duration: iDuration })
+        api("/habits/" + this._sHabitId + "/water", {
+            method: "POST",
+            body: JSON.stringify({ duration: iDuration })
+        })
+            .then(oResult => {
+                this._oWaterDialog.close();
+                oModel.setData(oResult.habit);
+                this._loadWeekly();
+
+                if (oResult.objectiveMetToday) {
+                    if (!bWasMetBefore) {
+                        MessageBox.success("Daily objective completed!");
+                    }
+                } else {
+                    MessageBox.information("You have " + oResult.remainingMinutesToday + " minutes left to reach today's objective.");
+                }
             })
-                .then(function (response) {
-                    if (!response.ok) {
-                        return response.json().then(function (oProblem) {
-                            throw new Error(oProblem.detail || "Error watering the habit");
-                        });
-                    }
-                    return response.json();
-                })
-                .then(function (oResult) {
-                    that._oWaterDialog.close();
-
-                    that.getView().getModel().setData(oResult.habit);
-                    that.getView().getModel("weekly").loadData("http://localhost:8081/habits/" + sHabitId + "/weekly-progress");
-
-                    if (oResult.objectiveMetToday) {
-                        if (!bWasMetBefore) {
-                            MessageBox.success("Daily objective completed!");
-                        }
-                    } else {
-                        MessageBox.information("You have " + oResult.remainingMinutesToday + " minutes left to reach today's objective.");
-                    }
-                })
-                .catch(function (oError) {
-                    MessageBox.error(oError.message);
-                });
-                },
+            .catch(oError => MessageBox.error(oError.message));
+    },
 
         onNavBack: function () {
             this.getRouter().navTo("main");

@@ -17,6 +17,7 @@ sap.ui.define(["harbest/service/AuthService"], function (AuthService) {
       throw new Error("Sesión caducada");
     }
     if (!res.ok) throw new Error(res.status);
-    return res.status === 204 ? null : res.json();
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
   };
 });
