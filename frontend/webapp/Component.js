@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
 	"sap/ui/model/json/JSONModel",
-	"./model/models"
-], function (UIComponent, Device, JSONModel, models) {
+	"./model/models",
+	"harbest/service/AuthService"
+], function (UIComponent, Device, JSONModel, models, AuthService) {
 	"use strict";
 
 	return UIComponent.extend("harbest.Component", {
@@ -15,12 +16,19 @@ sap.ui.define([
 			UIComponent.prototype.init.call(this);
 
 			this.setModel(models.createDeviceModel(), "device");
+			this.setModel(new JSONModel());
 
-			var oHabitsModel = new JSONModel();
-			oHabitsModel.loadData("http://localhost:8081/habits");
-			this.setModel(oHabitsModel);
-			this.getRouter().initialize();
-		},
+			const router = this.getRouter();
+			router.attachBeforeRouteMatched((e) => {
+				if (e.getParameter("name") !== "login" && !AuthService.getToken()) {
+					router.navTo("login", {}, true);
+				}
+			});
+			sap.ui.getCore().getEventBus().subscribe("auth", "sessionExpired", () => {
+				router.navTo("login");
+			});
+			router.initialize();
+},
 		/**
 		 * This method can be called to determine whether the sapUiSizeCompact or sapUiSizeCozy
 		 * design mode class should be set, which influences the size appearance of some controls.

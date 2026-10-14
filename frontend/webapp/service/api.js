@@ -2,7 +2,7 @@ sap.ui.define(["harbest/service/AuthService"], function (AuthService) {
   "use strict";
 
   return async function api(path, options = {}) {
-    const res = await fetch(path, {
+    const res = await fetch(AuthService.BASE_URL + path, {
       ...options,
       headers: {
         "Content-Type": "application/json",
