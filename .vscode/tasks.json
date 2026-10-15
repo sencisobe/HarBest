@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Frontend HarBest",
+      "type": "shell",
+      "command": "npm start",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend HarBest",
+      "type": "shell",
+      "command": ".\\mvnw spring-boot:run",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/harbest"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
