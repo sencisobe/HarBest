@@ -84,6 +84,11 @@
 					"pattern": "login",
 					"name": "login",
 					"target": "login"
+				},
+				{ 
+					"pattern": "register", 
+					"name": "register", 
+					"target": "register" 
 				}
 			],
 			"targets": {
@@ -98,6 +103,10 @@
 				"login": {
 					"id": "login",
 					"name": "Login"
+				},
+				"register": {
+					"id": "register",
+					"name": "Register"
 				}
 			}
 		}

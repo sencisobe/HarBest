@@ -1,0 +1,13 @@
+<mvc:View controllerName="harbest.controller.Register"
+	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<Page showHeader="false">
+		<VBox class="sapUiMediumMargin" width="20rem">
+			<Title text="Sign up" />
+			<Input id="email" type="Email" placeholder="Email" />
+			<Input id="password" type="Password" placeholder="Password" />
+			<Input id="confirm" type="Password" placeholder="Confirm password" />
+			<Button text="Sign up" type="Emphasized" press=".onRegister" />
+			<Link text="Already have an account? Log in" press=".onGoLogin" />
+		</VBox>
+	</Page>
+</mvc:View>

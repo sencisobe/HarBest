@@ -56,11 +56,16 @@ function (BaseController, MessageBox, Fragment, api, AuthService) {	"use strict"
 					return this._loadHabits();
 				})
 				.catch(oError => MessageBox.error(oError.message));
-	},
+		},
 		onHabitPress: function (oEvent) {
 			var oCtx = oEvent.getSource().getBindingContext();
 			var sHabitId = oCtx.getProperty("id");
 			this.getRouter().navTo("habitDetail", { habitId: sHabitId });
+		},
+		onLogout: function () {
+			AuthService.logout();
+			this.getView().getModel().setData([]);
+			this.getRouter().navTo("login");
 		}
 		
 	});

@@ -10,8 +10,12 @@ sap.ui.define([], function () {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ email, password })
 		});
-		if (!res.ok) throw new Error(res.status);
-		return res;
+		const text = await res.text();
+		const body = text ? JSON.parse(text) : null;
+		if (!res.ok) {
+			throw new Error((body && body.detail) || "Error " + res.status);
+		}
+		return body;
 	}
 
 	return {
@@ -20,9 +24,8 @@ sap.ui.define([], function () {
 		logout: () => sessionStorage.removeItem(KEY),
 
 		async login(email, password) {
-			const res = await post("/auth/login", email, password);
-			const { token } = await res.json();
-			sessionStorage.setItem(KEY, token);
+			const body = await post("/auth/login", email, password);
+			sessionStorage.setItem(KEY, body.token);
 		},
 
 		async register(email, password) {

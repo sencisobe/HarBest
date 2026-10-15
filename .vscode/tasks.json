@@ -11,12 +11,16 @@
       "isBackground": true,
       "problemMatcher": []
     },
-    {
+      {
       "label": "Backend HarBest",
       "type": "shell",
-      "command": ".\\mvnw spring-boot:run",
+      "command": "$env:JWT_SECRET = [Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }) -as [byte[]]); .\\mvnw spring-boot:run",
       "options": {
-        "cwd": "${workspaceFolder}/backend/harbest"
+        "cwd": "${workspaceFolder}/backend/harbest",
+        "shell": {
+          "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
       },
       "isBackground": true,
       "problemMatcher": []

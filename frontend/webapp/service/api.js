@@ -11,12 +11,15 @@ sap.ui.define(["harbest/service/AuthService"], function (AuthService) {
       }
     });
 
-    if (res.status === 401 || res.status === 403) {
-      AuthService.logout();
-      sap.ui.getCore().getEventBus().publish("auth", "sessionExpired");
-      throw new Error("Sesión caducada");
-    }
-    if (!res.ok) throw new Error(res.status);
+  if (res.status === 401) {
+    AuthService.logout();
+    sap.ui.getCore().getEventBus().publish("auth", "sessionExpired");
+    throw new Error("Session expired");
+  }
+  if (!res.ok) {
+    const problem = await res.json().catch(() => null);
+    throw new Error(problem?.detail || "Error " + res.status);
+  }
     const text = await res.text();
     return text ? JSON.parse(text) : null;
   };

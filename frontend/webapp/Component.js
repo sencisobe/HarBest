@@ -19,8 +19,9 @@ sap.ui.define([
 			this.setModel(new JSONModel());
 
 			const router = this.getRouter();
+			const PUBLIC = ["login", "register"];
 			router.attachBeforeRouteMatched((e) => {
-				if (e.getParameter("name") !== "login" && !AuthService.getToken()) {
+				if (!PUBLIC.includes(e.getParameter("name")) && !AuthService.getToken()) {
 					router.navTo("login", {}, true);
 				}
 			});
