@@ -9,7 +9,7 @@ function (BaseController, MessageToast, AuthService) {
 				MessageToast.show("Passwords do not match");
 				return;
 			}
-			AuthService.register(this.byId("email").getValue(), sPassword)
+			AuthService.register( this.byId("username").getValue(), this.byId("email").getValue(),sPassword)
 				.then(() => this.getRouter().navTo("main"))
 				.catch(oError => MessageToast.show(oError.message));
 		},

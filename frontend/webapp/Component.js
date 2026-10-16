@@ -19,12 +19,12 @@ sap.ui.define([
 			this.setModel(new JSONModel());
 
 			const router = this.getRouter();
-			const PUBLIC = ["login", "register"];
-			router.attachBeforeRouteMatched((e) => {
-				if (!PUBLIC.includes(e.getParameter("name")) && !AuthService.getToken()) {
-					router.navTo("login", {}, true);
-				}
-			});
+			const PUBLIC = ["#/login", "#/register"];
+
+			if (!AuthService.getToken() && !PUBLIC.includes(window.location.hash)) {
+				window.location.hash = "#/login";
+			}
+
 			sap.ui.getCore().getEventBus().subscribe("auth", "sessionExpired", () => {
 				router.navTo("login");
 			});

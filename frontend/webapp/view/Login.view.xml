@@ -3,7 +3,7 @@
 	<Page showHeader="false">
 		<VBox class="sapUiMediumMargin" width="20rem">
 			<Title text="Log in" />
-			<Input id="email" type="Email" placeholder="Email" />
+			<Input id="identifier" placeholder="Username or email" />
 			<Input id="password" type="Password" placeholder="Password" />
 			<Button text="Log in" type="Emphasized" press=".onLogin" />
 			<Link text="Don't have an account? Sign up" press=".onGoRegister" />

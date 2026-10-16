@@ -3,6 +3,7 @@
 	<Page showHeader="false">
 		<VBox class="sapUiMediumMargin" width="20rem">
 			<Title text="Sign up" />
+			<Input id="username" placeholder="Username" />
 			<Input id="email" type="Email" placeholder="Email" />
 			<Input id="password" type="Password" placeholder="Password" />
 			<Input id="confirm" type="Password" placeholder="Confirm password" />

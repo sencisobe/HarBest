@@ -4,7 +4,7 @@ function (BaseController, MessageToast, AuthService) {
 
 	return BaseController.extend("harbest.controller.Login", {
 		onLogin: function () {
-			AuthService.login(this.byId("email").getValue(), this.byId("password").getValue())
+			AuthService.login(this.byId("identifier").getValue(), this.byId("password").getValue())
 				.then(() => this.getRouter().navTo("main"))
 				.catch(oError => MessageToast.show(oError.message));
 		},

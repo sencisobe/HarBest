@@ -19,7 +19,11 @@ EL usuario debe como MAXIMO tener 5 hábitos (si no se verá forzado a borrar un
 
 El usuario debe ver que si cumple con el objetivo diario una felicitación
 
+-------------TO BE DONE A DIA 16/10
+
 El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
+
+El usuario debe tener un tutorial rapido por la interfaz de la aplicación al crearse la cuenta
 
 	Implementacion vista:
 		¿que es un evolutivo exactamente?

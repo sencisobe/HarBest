@@ -4,11 +4,11 @@ sap.ui.define([], function () {
 	const KEY = "harbest.token";
 	const BASE_URL = "http://localhost:8081";
 
-	async function post(path, email, password) {
+	async function post(path, payload) {
 		const res = await fetch(BASE_URL + path, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ email, password })
+			body: JSON.stringify(payload)
 		});
 		const text = await res.text();
 		const body = text ? JSON.parse(text) : null;
@@ -23,14 +23,14 @@ sap.ui.define([], function () {
 		getToken: () => sessionStorage.getItem(KEY),
 		logout: () => sessionStorage.removeItem(KEY),
 
-		async login(email, password) {
-			const body = await post("/auth/login", email, password);
+		async login(identifier, password) {
+			const body = await post("/auth/login", { identifier, password });
 			sessionStorage.setItem(KEY, body.token);
 		},
 
-		async register(email, password) {
-			await post("/auth/register", email, password);
-			await this.login(email, password);
+		async register(username, email, password) {
+			await post("/auth/register", { username, email, password });
+			await this.login(username, password);
 		}
 	};
 });
