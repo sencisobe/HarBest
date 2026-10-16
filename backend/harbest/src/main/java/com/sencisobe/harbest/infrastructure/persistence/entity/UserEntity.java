@@ -11,6 +11,9 @@ public class UserEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -27,6 +30,7 @@ public class UserEntity {
     }
 
     public Long getId() { return id; }
+    public String getUsername() { return username; }
     public String getEmail() { return email; }
     public String getPasswordHash() { return passwordHash; }
     public LocalDate getCreatedAt() { return createdAt; }

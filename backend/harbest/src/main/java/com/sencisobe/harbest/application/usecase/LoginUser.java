@@ -1,5 +1,7 @@
 package com.sencisobe.harbest.application.usecase;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,15 @@ public class LoginUser {
         this.tokenProvider = tokenProvider;
     }
 
-    public String execute(String email, String rawPassword) {
-        User user = userRepository.findByEmail(email.trim().toLowerCase())
+    public String execute(String identifier, String rawPassword) {
+        String clean = identifier.trim().toLowerCase();
+        Optional<User> found = clean.contains("@")
+                ? userRepository.findByEmail(clean)
+                : userRepository.findByUsername(clean);
+        User user = found
                 .filter(u -> passwordHasher.matches(rawPassword, u.getPasswordHash()))
-                .orElseThrow(() -> {
-                    log.warn("Login fallido");
-                    return new InvalidCredentialsException();
-                });
+                .orElseThrow(() -> { log.warn("Login fallido"); return new InvalidCredentialsException(); });
+
         log.info("Login correcto: userId={}", user.getId());
         return tokenProvider.generate(user.getId());
     }

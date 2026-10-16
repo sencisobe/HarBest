@@ -34,7 +34,16 @@ public class UserRepositoryImpl implements UserRepository {
         return jpaRepository.existsByEmail(email);
     }
 
+    @Override 
+    public Optional<User> findByUsername(String username) {
+        return jpaRepository.findByUsername(username).map(this::toDomain);
+    }
+
+    @Override 
+    public boolean existsByUsername(String username){
+        return jpaRepository.existsByUsername(username);
+    }
     private User toDomain(UserEntity e) {
-        return new User(e.getId(), e.getEmail(), e.getPasswordHash(), e.getCreatedAt());
+        return new User(e.getId(),e.getUsername(), e.getEmail(), e.getPasswordHash(), e.getCreatedAt());
     }
 }

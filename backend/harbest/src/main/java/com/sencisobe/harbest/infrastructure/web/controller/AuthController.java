@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sencisobe.harbest.application.usecase.LoginUser;
 import com.sencisobe.harbest.application.usecase.RegisterUser;
-import com.sencisobe.harbest.infrastructure.web.dto.AuthRequest;
+import com.sencisobe.harbest.infrastructure.web.dto.LoginRequest;
+import com.sencisobe.harbest.infrastructure.web.dto.RegisterRequest;
 import com.sencisobe.harbest.infrastructure.web.dto.TokenResponse;
 
 import jakarta.validation.Valid;
@@ -27,12 +28,12 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody AuthRequest request) {
-        registerUser.execute(request.email(), request.password());
+    public void register(@Valid @RequestBody RegisterRequest request) {
+        registerUser.execute(request.email(), request.username(), request.password());
     }
 
     @PostMapping("/login")
-    public TokenResponse login(@Valid @RequestBody AuthRequest request) {
-        return new TokenResponse(loginUser.execute(request.email(), request.password()));
+    public TokenResponse login(@Valid @RequestBody LoginRequest request) {
+        return new TokenResponse(loginUser.execute(request.identifier(), request.password()));
     }
 }

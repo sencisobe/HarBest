@@ -19,23 +19,46 @@ public class LoginUserTest {
 
     @BeforeEach
     void setUp() {
-        new RegisterUser(users, hasher).execute("a@x.com", "12345678");
+        new RegisterUser(users, hasher).execute("a@x.com", "ana", "12345678");
     }
 
     @Test
-    void returnsTokenWithValidCredentials() {
+    void returnsTokenWithEmail() {
         assertEquals("token-1", loginUser.execute("a@x.com", "12345678"));
     }
 
     @Test
-    void rejectsWrongPassword() {
+    void returnsTokenWithUsername() {
+        assertEquals("token-1", loginUser.execute("ana", "12345678"));
+    }
+
+    @Test
+    void loginIgnoresCaseAndSpaces() {
+        assertEquals("token-1", loginUser.execute("  ANA ", "12345678"));
+        assertEquals("token-1", loginUser.execute("A@X.com", "12345678"));
+    }
+
+    @Test
+    void rejectsWrongPasswordWithEmail() {
         assertThrows(InvalidCredentialsException.class,
                 () -> loginUser.execute("a@x.com", "incorrecta"));
+    }
+
+    @Test
+    void rejectsWrongPasswordWithUsername() {
+        assertThrows(InvalidCredentialsException.class,
+                () -> loginUser.execute("ana", "incorrecta"));
     }
 
     @Test
     void rejectsUnknownEmailWithSameException() {
         assertThrows(InvalidCredentialsException.class,
                 () -> loginUser.execute("nadie@x.com", "12345678"));
+    }
+
+    @Test
+    void rejectsUnknownUsernameWithSameException() {
+        assertThrows(InvalidCredentialsException.class,
+                () -> loginUser.execute("nadie", "12345678"));
     }
 }

@@ -24,6 +24,20 @@
       },
       "isBackground": true,
       "problemMatcher": []
+    },
+    {
+      "label": "Backend compile",
+      "type": "shell",
+      "command": "mvn clean compile",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/harbest",
+        "shell": {
+          "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
     }
   ]
 }
