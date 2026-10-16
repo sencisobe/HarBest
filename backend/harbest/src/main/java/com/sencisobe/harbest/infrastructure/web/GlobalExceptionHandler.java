@@ -7,6 +7,7 @@ import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
 import com.sencisobe.harbest.domain.exception.InvalidHabitDataException;
 import com.sencisobe.harbest.domain.exception.InvalidWaterDataException;
+import com.sencisobe.harbest.domain.exception.UsernameAlreadyUsedException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -41,6 +42,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler (InvalidCredentialsException.class)
     public ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex){
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+        @ExceptionHandler(UsernameAlreadyUsedException.class)
+    public ProblemDetail handleUsernameAlreadyUsed(UsernameAlreadyUsedException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
