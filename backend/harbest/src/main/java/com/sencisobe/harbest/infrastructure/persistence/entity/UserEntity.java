@@ -10,11 +10,12 @@ public class UserEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
+
+     @Column(nullable = false, unique = true)
+    private String username;
 
     @Column(nullable = false)
     private String passwordHash;
@@ -23,12 +24,12 @@ public class UserEntity {
 
     protected UserEntity() {}
 
-    public UserEntity(String email, String passwordHash, LocalDate createdAt) {
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.createdAt = createdAt;
-    }
-
+   public UserEntity(String email, String username, String passwordHash, LocalDate createdAt) {
+    this.email = email;
+    this.username = username;
+    this.passwordHash = passwordHash;
+    this.createdAt = createdAt;
+}
     public Long getId() { return id; }
     public String getUsername() { return username; }
     public String getEmail() { return email; }

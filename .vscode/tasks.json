@@ -38,6 +38,20 @@
       },
       "isBackground": true,
       "problemMatcher": []
+    },
+      {
+      "label": "Backend test",
+      "type": "shell",
+      "command": "mvn test",
+      "options": {
+        "cwd": "${workspaceFolder}/backend/harbest",
+        "shell": {
+          "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "args": ["-NoProfile", "-Command"]
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
     }
   ]
 }

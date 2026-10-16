@@ -1,6 +1,5 @@
 package com.sencisobe.harbest.domain.model;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

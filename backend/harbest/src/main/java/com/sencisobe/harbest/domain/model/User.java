@@ -10,7 +10,7 @@ public class User {
     private String passwordHash;
     private LocalDate createdAt;
 
-    public User(String username,String email, String passwordHash) {
+    public User(String email,String username, String passwordHash) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -18,7 +18,7 @@ public class User {
     }
 
     // Para persistencia
-    public User(Long id, String username, String email, String passwordHash, LocalDate createdAt) {
+    public User(Long id,  String email,String username, String passwordHash, LocalDate createdAt) {
         this.id = id;
         this.username = username;
         this.email = email;
