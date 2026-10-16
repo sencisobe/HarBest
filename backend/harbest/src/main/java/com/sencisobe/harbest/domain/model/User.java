@@ -11,8 +11,8 @@ public class User {
     private LocalDate createdAt;
 
     public User(String email,String username, String passwordHash) {
-        this.username = username;
         this.email = email;
+        this.username = username;
         this.passwordHash = passwordHash;
         this.createdAt = LocalDate.now();
     }
@@ -20,8 +20,8 @@ public class User {
     // Para persistencia
     public User(Long id,  String email,String username, String passwordHash, LocalDate createdAt) {
         this.id = id;
-        this.username = username;
         this.email = email;
+        this.username = username;
         this.passwordHash = passwordHash;
         this.createdAt = createdAt;
     }
