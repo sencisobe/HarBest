@@ -3,7 +3,7 @@ sap.ui.define([], function () {
 
 	const KEY = "harbest.token";
 	const USER_KEY = "harbest.username";
-	const BASE_URL = "";
+	const BASE_URL = window.location.port === "8080" ? "http://localhost:8081" : "";
 
 	async function post(path, payload) {
 		const res = await fetch(BASE_URL + path, {
