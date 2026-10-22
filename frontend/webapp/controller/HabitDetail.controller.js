@@ -1,5 +1,5 @@
-sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment", "sap/m/MessageBox", "harbest/service/api"],
-function (BaseController, JSONModel, Fragment, MessageBox, api) {    "use strict";
+sap.ui.define(["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment", "sap/m/MessageBox", "harbest/service/api", "harbest/service/AuthService"],
+function (BaseController, JSONModel, Fragment, MessageBox, api, AuthService) {    "use strict";
 
     return BaseController.extend("harbest.controller.HabitDetail", {
         onInit: function () {
@@ -71,6 +71,11 @@ function (BaseController, JSONModel, Fragment, MessageBox, api) {    "use strict
 
         onNavBack: function () {
             this.getRouter().navTo("main");
-        }
+        },
+        onLogout: function () {
+			AuthService.logout();
+			this.getView().getModel().setData([]);
+			this.getRouter().navTo("login");
+		}
     });
 });

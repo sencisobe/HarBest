@@ -17,6 +17,7 @@ sap.ui.define([
 
 			this.setModel(models.createDeviceModel(), "device");
 			this.setModel(new JSONModel());
+			this.setModel(new JSONModel({ username: AuthService.getUsername() }), "user");
 
 			const router = this.getRouter();
 			const PUBLIC = ["#/login", "#/register"];

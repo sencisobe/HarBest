@@ -12,6 +12,7 @@
 		title="{i18n>appTitle}"
 		id="page">
 			<headerContent>
+				<Text text="{user>/username}" class="sapUiTinyMarginEnd"/>
 				<Button icon="sap-icon://log" tooltip="Log out" press=".onLogout" />
 			</headerContent>
 		<content>

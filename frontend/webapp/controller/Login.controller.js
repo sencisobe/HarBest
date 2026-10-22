@@ -5,7 +5,11 @@ function (BaseController, MessageToast, AuthService) {
 	return BaseController.extend("harbest.controller.Login", {
 		onLogin: function () {
 			AuthService.login(this.byId("identifier").getValue(), this.byId("password").getValue())
-				.then(() => this.getRouter().navTo("main"))
+				.then(() => {
+					this.getOwnerComponent().getModel("user")
+						.setProperty("/username", AuthService.getUsername());
+					this.getRouter().navTo("main");
+				})
 				.catch(oError => MessageToast.show(oError.message));
 		},
 		onGoRegister: function () {

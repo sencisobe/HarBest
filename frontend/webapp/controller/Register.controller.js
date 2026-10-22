@@ -10,7 +10,11 @@ function (BaseController, MessageToast, AuthService) {
 				return;
 			}
 			AuthService.register( this.byId("username").getValue(), this.byId("email").getValue(),sPassword)
-				.then(() => this.getRouter().navTo("main"))
+				.then(() => {
+					this.getOwnerComponent().getModel("user")
+						.setProperty("/username", AuthService.getUsername());
+					this.getRouter().navTo("main");
+				})
 				.catch(oError => MessageToast.show(oError.message));
 		},
 		onGoLogin: function () {

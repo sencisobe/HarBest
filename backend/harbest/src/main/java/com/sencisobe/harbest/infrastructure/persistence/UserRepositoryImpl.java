@@ -44,6 +44,6 @@ public class UserRepositoryImpl implements UserRepository {
         return jpaRepository.existsByUsername(username);
     }
     private User toDomain(UserEntity e) {
-        return new User(e.getId(),e.getUsername(), e.getEmail(), e.getPasswordHash(), e.getCreatedAt());
+        return new User(e.getId(),e.getEmail(), e.getUsername(), e.getPasswordHash(), e.getCreatedAt());
     }
 }

@@ -2,7 +2,8 @@ sap.ui.define([], function () {
 	"use strict";
 
 	const KEY = "harbest.token";
-	const BASE_URL = "";
+	const USER_KEY = "harbest.username";
+	const BASE_URL = "http://localhost:8081";
 
 	async function post(path, payload) {
 		const res = await fetch(BASE_URL + path, {
@@ -21,11 +22,16 @@ sap.ui.define([], function () {
 	return {
 		BASE_URL,
 		getToken: () => sessionStorage.getItem(KEY),
-		logout: () => sessionStorage.removeItem(KEY),
+		getUsername: () => sessionStorage.getItem(USER_KEY),
+		logout: () => {
+			sessionStorage.removeItem(KEY);
+			sessionStorage.removeItem(USER_KEY);
+		},
 
 		async login(identifier, password) {
 			const body = await post("/auth/login", { identifier, password });
 			sessionStorage.setItem(KEY, body.token);
+			sessionStorage.setItem(USER_KEY, body.username);
 		},
 
 		async register(username, email, password) {
