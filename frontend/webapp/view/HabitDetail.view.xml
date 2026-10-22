@@ -20,9 +20,12 @@
                 <Text text="{= ${/minutesDoneToday} >= ${/dailyObjectiveTime} ? 'Objective completed today ✓' : 'Objective not completed yet'}"/>
                 <Button text="Water" icon="sap-icon://watering-can" type="Emphasized" press=".onOpenWaterDialog" class="sapUiSmallMarginTop"/>
                 <Text text="Last 7 days" class="sapUiSmallMarginTop sapUiMediumMarginBottom"/>
-                <List items="{weekly>/}">
-                    <StandardListItem title="{weekly>date}" info="{weekly>duration} min"/>
-                </List>
+                    <HBox items="{weekly>/}" wrap="Wrap" justifyContent="SpaceBetween">
+                        <VBox alignItems="Center" class="sapUiSmallMarginEnd">
+                            <Text text="{weekly>date}"/>
+                            <ObjectNumber number="{weekly>duration}" unit="min"/>
+                        </VBox>
+                    </HBox>
             </VBox>
         </content>
     </Page>

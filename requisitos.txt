@@ -18,12 +18,18 @@ El usuario debe poder borrar los hábitos
 EL usuario debe como MAXIMO tener 5 hábitos (si no se verá forzado a borrar uno)
 
 El usuario debe ver que si cumple con el objetivo diario una felicitación
+ 
+¿El usuario debería poder cambiar el tiempo objetivo diario???
 
 -------------TO BE DONE A DIA 16/10
 
 El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
 
 El usuario debe tener un tutorial rapido por la interfaz de la aplicación al crearse la cuenta
+
+El usuario al ver sus stats de un habito a lo largo de la semana debería ser capaz de verlo con un 
+gráfico de barras , se debe ver que dias ha conseguido el objetivo
+
 
 	Implementacion vista:
 		¿que es un evolutivo exactamente?

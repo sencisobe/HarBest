@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sencisobe.harbest.application.dto.LoginResult;
 import com.sencisobe.harbest.application.usecase.LoginUser;
 import com.sencisobe.harbest.application.usecase.RegisterUser;
 import com.sencisobe.harbest.infrastructure.web.dto.LoginRequest;
@@ -34,6 +35,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public TokenResponse login(@Valid @RequestBody LoginRequest request) {
-        return new TokenResponse(loginUser.execute(request.identifier(), request.password()));
+    LoginResult result = loginUser.execute(request.identifier(), request.password());
+    return new TokenResponse(result.token(), result.username());  
     }
 }

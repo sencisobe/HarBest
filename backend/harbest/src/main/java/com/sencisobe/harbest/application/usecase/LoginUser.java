@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.sencisobe.harbest.application.dto.LoginResult;
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
 import com.sencisobe.harbest.domain.model.User;
 import com.sencisobe.harbest.domain.repository.UserRepository;
@@ -27,7 +28,7 @@ public class LoginUser {
         this.tokenProvider = tokenProvider;
     }
 
-    public String execute(String identifier, String rawPassword) {
+    public LoginResult execute(String identifier, String rawPassword) {
         String clean = identifier.trim().toLowerCase();
         Optional<User> found = clean.contains("@")
                 ? userRepository.findByEmail(clean)
@@ -37,6 +38,6 @@ public class LoginUser {
                 .orElseThrow(() -> { log.warn("Login fallido"); return new InvalidCredentialsException(); });
 
         log.info("Login correcto: userId={}", user.getId());
-        return tokenProvider.generate(user.getId());
+        return new LoginResult(tokenProvider.generate(user.getId()), user.getUsername());
     }
 }

@@ -24,18 +24,17 @@ public class LoginUserTest {
 
     @Test
     void returnsTokenWithEmail() {
-        assertEquals("token-1", loginUser.execute("a@x.com", "12345678"));
+        assertEquals("token-1", loginUser.execute("a@x.com", "12345678").token());
     }
 
     @Test
     void returnsTokenWithUsername() {
-        assertEquals("token-1", loginUser.execute("ana", "12345678"));
+        assertEquals("token-1", loginUser.execute("ana", "12345678").token());
     }
-
     @Test
     void loginIgnoresCaseAndSpaces() {
-        assertEquals("token-1", loginUser.execute("  ANA ", "12345678"));
-        assertEquals("token-1", loginUser.execute("A@X.com", "12345678"));
+        assertEquals("token-1", loginUser.execute("  ANA ", "12345678").token());
+        assertEquals("token-1", loginUser.execute("A@X.com", "12345678").token());
     }
 
     @Test
