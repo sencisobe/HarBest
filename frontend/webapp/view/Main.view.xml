@@ -23,7 +23,7 @@
 				<Text text="{i18n>appDescription}" class="sapUiTinyMarginTop"/>
 			</VBox>
 			
-			<Button text="Create habit" press=".onOpenCreateDialog" icon="sap-icon://add" class="sapUiSmallMarginBottom"/>
+			<Button text="{i18n>mainCreateHabit}" press=".onOpenCreateDialog" icon="sap-icon://add" class="sapUiSmallMarginBottom"/>
 
 			<List items="{/}">
 				<CustomListItem type="Navigation" press=".onHabitPress">

@@ -18,7 +18,9 @@ El usuario debe poder borrar los hábitos
 EL usuario debe como MAXIMO tener 5 hábitos (si no se verá forzado a borrar uno)
 
 El usuario debe ver que si cumple con el objetivo diario una felicitación
- 
+
+El usuario debe marcarsele en el menu si tiene algun habito por realizar en el día!
+
 ¿El usuario debería poder cambiar el tiempo objetivo diario???
 
 -------------TO BE DONE A DIA 16/10

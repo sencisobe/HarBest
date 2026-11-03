@@ -2,13 +2,13 @@
 	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
 	<Page showHeader="false">
 		<VBox class="sapUiMediumMargin" width="20rem">
-			<Title text="Sign up" />
-			<Input id="username" placeholder="Username" />
-			<Input id="email" type="Email" placeholder="Email" />
-			<Input id="password" type="Password" placeholder="Password" />
-			<Input id="confirm" type="Password" placeholder="Confirm password" />
-			<Button text="Sign up" type="Emphasized" press=".onRegister" />
-			<Link text="Already have an account? Log in" press=".onGoLogin" />
+			<Title text="{i18n>registerTitle}" />
+			<Input id="username" placeholder="{i18n>registerUsername}" liveChange=".onInputChange" />
+			<Input id="email" type="Email" placeholder="{i18n>registerEmail}" liveChange=".onInputChange" />
+			<Input id="password" type="Password" placeholder="{i18n>registerPassword}" liveChange=".onInputChange" />
+			<Input id="confirm" type="Password" placeholder="{i18n>registerConfirm}" liveChange=".onInputChange" />
+			<Button text="{i18n>registerButton}" type="Emphasized" press=".onRegister" />
+			<Link text="{i18n>register2Login}" press=".onGoLogin" />
 		</VBox>
 	</Page>
 </mvc:View>

@@ -53,9 +53,10 @@
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
 					"bundleName": "harbest.i18n.i18n",
-					"supportedLocales": ["en", "de"],
+					"supportedLocales": ["en", "es"],
 					"fallbackLocale": "en",
 					"async": true
+
 				}
 			}
 		},

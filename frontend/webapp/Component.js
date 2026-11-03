@@ -19,6 +19,9 @@ sap.ui.define([
 			this.setModel(new JSONModel());
 			this.setModel(new JSONModel({ username: AuthService.getUsername() }), "user");
 
+			this.getModel("i18n").getResourceBundle().then(oBundle => {
+				this._oBundle = oBundle;
+			});
 			const router = this.getRouter();
 			const PUBLIC = ["#/login", "#/register"];
 

@@ -49,6 +49,18 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent", "sap/ui/
 		navTo: function (sName, oParameters, bReplace) {
 			this.getRouter().navTo(sName, oParameters, undefined, bReplace);
 		},
+		onInputChange: function (oEvent) {
+			oEvent.getSource().setValueState("None");
+		},
+		getText: function (sKey) {
+			return this.getOwnerComponent()._oBundle.getText(sKey);
+		},
+
+		formatStage: function (sStage) {
+			var oBundle = this.getOwnerComponent()._oBundle;
+			var sKey = "stage" + sStage;
+			return oBundle && oBundle.hasText(sKey) ? oBundle.getText(sKey) : sStage;
+		},
 
 		/**
 		 * Convenience event handler for navigating back.

@@ -44,30 +44,39 @@ function (BaseController, JSONModel, Fragment, MessageBox, api, AuthService) {  
             this._oWaterDialog.close();
         },
 
-        onConfirmWaterHabit: function () {
-        var iDuration = parseInt(this.byId("waterDurationInput").getValue(), 10);
-        var oModel = this.getView().getModel();
-        var bWasMetBefore = oModel.getProperty("/minutesDoneToday") >= oModel.getProperty("/dailyObjectiveTime");
+      onConfirmWaterHabit: function () {
+            var oInput = this.byId("waterDurationInput");
+            var iDuration = parseInt(oInput.getValue(), 10);
 
-        api("/habits/" + this._sHabitId + "/water", {
-            method: "POST",
-            body: JSON.stringify({ duration: iDuration })
-        })
-            .then(oResult => {
-                this._oWaterDialog.close();
-                oModel.setData(oResult.habit);
-                this._loadWeekly();
+            if (isNaN(iDuration) || iDuration <= 0) {
+                oInput.setValueState("Error");
+                oInput.setValueStateText(this.getText("waterInvalidDuration"));
+                return;
+            }
+            oInput.setValueState("None");
 
-                if (oResult.objectiveMetToday) {
-                    if (!bWasMetBefore) {
-                        MessageBox.success("Daily objective completed!");
-                    }
-                } else {
-                    MessageBox.information("You have " + oResult.remainingMinutesToday + " minutes left to reach today's objective.");
-                }
+            var oModel = this.getView().getModel();
+            var bWasMetBefore = oModel.getProperty("/minutesDoneToday") >= oModel.getProperty("/dailyObjectiveTime");
+
+            api("/habits/" + this._sHabitId + "/water", {
+                method: "POST",
+                body: JSON.stringify({ duration: iDuration })
             })
-            .catch(oError => MessageBox.error(oError.message));
-    },
+                .then(oResult => {
+                    this._oWaterDialog.close();
+                    oModel.setData(oResult.habit);
+                    this._loadWeekly();
+
+                    if (oResult.objectiveMetToday) {
+                        if (!bWasMetBefore) {
+                            MessageBox.success("Daily objective completed!");
+                        }
+                    } else {
+                        MessageBox.information("You have " + oResult.remainingMinutesToday + " minutes left to reach today's objective.");
+                    }
+                })
+                .catch(oError => MessageBox.error(oError.message));
+        },
 
         onNavBack: function () {
             this.getRouter().navTo("main");

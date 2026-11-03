@@ -39,13 +39,24 @@ function (BaseController, MessageBox, Fragment, api, AuthService) {	"use strict"
 			}
 		},
 
-		onCancelCreateHabit: function () {
-			this._oCreateDialog.close();
-		},
 
 		onConfirmCreateHabit: function () {
-			var sName = this.byId("habitNameInput").getValue();
-			var iTime = parseInt(this.byId("habitTimeInput").getValue(), 10);
+			var oName = this.byId("habitNameInput");
+			var oTime = this.byId("habitTimeInput");
+			var sName = oName.getValue().trim();
+			var iTime = parseInt(oTime.getValue(), 10);
+
+			var bNameOk = !!sName;
+			var bTimeOk = !isNaN(iTime) && iTime > 0;
+
+			oName.setValueState(bNameOk ? "None" : "Error");
+			oName.setValueStateText(this.getText("createNameRequired"));
+			oTime.setValueState(bTimeOk ? "None" : "Error");
+			oTime.setValueStateText(this.getText("createTimeInvalid"));
+
+			if (!bNameOk || !bTimeOk) {
+				return;
+			}
 
 			api("/habits", {
 				method: "POST",
@@ -61,6 +72,11 @@ function (BaseController, MessageBox, Fragment, api, AuthService) {	"use strict"
 			var oCtx = oEvent.getSource().getBindingContext();
 			var sHabitId = oCtx.getProperty("id");
 			this.getRouter().navTo("habitDetail", { habitId: sHabitId });
+		},
+		onCancelCreateHabit: function () {
+			this.byId("habitNameInput").setValueState("None");
+			this.byId("habitTimeInput").setValueState("None");
+			this._oCreateDialog.close();
 		},
 		onLogout: function () {
 			AuthService.logout();
