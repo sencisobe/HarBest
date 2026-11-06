@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.sencisobe.harbest.domain.exception.EmailAlreadyUsedException;
 import com.sencisobe.harbest.domain.exception.UsernameAlreadyUsedException;
+import com.sencisobe.harbest.domain.model.AuditEvent;
 import com.sencisobe.harbest.domain.model.User;
+import com.sencisobe.harbest.domain.repository.AuditLog;
 import com.sencisobe.harbest.domain.repository.UserRepository;
 import com.sencisobe.harbest.domain.service.PasswordHasher;
 
@@ -17,10 +19,13 @@ public class RegisterUser {
 
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
+    private final AuditLog auditLog;
 
-    public RegisterUser(UserRepository userRepository, PasswordHasher passwordHasher) {
+
+public RegisterUser(UserRepository userRepository, PasswordHasher passwordHasher, AuditLog auditLog) {
         this.userRepository = userRepository;
         this.passwordHasher = passwordHasher;
+        this.auditLog = auditLog;
     }
 
     public User execute(String email,String username, String rawPassword) {
@@ -36,8 +41,9 @@ public class RegisterUser {
             throw new UsernameAlreadyUsedException(cleanUsername);
         }
 
-        User saved = userRepository.save(new User(cleanEmail, cleanUsername,passwordHasher.hash(rawPassword)));
+        User saved = userRepository.save(new User(cleanEmail, cleanUsername, passwordHasher.hash(rawPassword)));
         log.info("Usuario registrado: userId={}", saved.getId());
+        auditLog.record(new AuditEvent(saved.getId(), "REGISTER", null));
         return saved;
     }
 }

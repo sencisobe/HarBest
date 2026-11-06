@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.sencisobe.harbest.application.dto.LoginResult;
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
+import com.sencisobe.harbest.domain.model.AuditEvent;
 import com.sencisobe.harbest.domain.model.User;
+import com.sencisobe.harbest.domain.repository.AuditLog;
 import com.sencisobe.harbest.domain.repository.UserRepository;
 import com.sencisobe.harbest.domain.service.PasswordHasher;
 import com.sencisobe.harbest.domain.service.TokenProvider;
@@ -21,23 +23,31 @@ public class LoginUser {
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
     private final TokenProvider tokenProvider;
+    private final AuditLog auditLog;
 
-    public LoginUser(UserRepository userRepository, PasswordHasher passwordHasher, TokenProvider tokenProvider) {
-        this.userRepository = userRepository;
-        this.passwordHasher = passwordHasher;
-        this.tokenProvider = tokenProvider;
-    }
+public LoginUser(UserRepository userRepository, PasswordHasher passwordHasher,
+                 TokenProvider tokenProvider, AuditLog auditLog) {
+    this.userRepository = userRepository;
+    this.passwordHasher = passwordHasher;
+    this.tokenProvider = tokenProvider;
+    this.auditLog = auditLog;
+}
 
-    public LoginResult execute(String identifier, String rawPassword) {
-        String clean = identifier.trim().toLowerCase();
-        Optional<User> found = clean.contains("@")
-                ? userRepository.findByEmail(clean)
-                : userRepository.findByUsername(clean);
-        User user = found
-                .filter(u -> passwordHasher.matches(rawPassword, u.getPasswordHash()))
-                .orElseThrow(() -> { log.warn("Login fallido"); return new InvalidCredentialsException(); });
 
-        log.info("Login correcto: userId={}", user.getId());
-        return new LoginResult(tokenProvider.generate(user.getId()), user.getUsername());
-    }
+   public LoginResult execute(String identifier, String rawPassword) {
+    String clean = identifier.trim().toLowerCase();
+    Optional<User> found = clean.contains("@")
+            ? userRepository.findByEmail(clean)
+            : userRepository.findByUsername(clean);
+    User user = found
+            .filter(u -> passwordHasher.matches(rawPassword, u.getPasswordHash()))
+            .orElseThrow(() -> {
+                log.warn("Login fallido");
+                auditLog.record(new AuditEvent(null, "LOGIN_FAILED", null));
+                return new InvalidCredentialsException();
+            });
+    log.info("Login correcto: userId={}", user.getId());
+    auditLog.record(new AuditEvent(user.getId(), "LOGIN_OK", null));
+    return new LoginResult(tokenProvider.generate(user.getId()), user.getUsername());
+}
 }

@@ -1,12 +1,14 @@
 package com.sencisobe.harbest.application.usecase;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
+import com.sencisobe.harbest.support.FakeAuditLog;
 import com.sencisobe.harbest.support.FakePasswordHasher;
 import com.sencisobe.harbest.support.FakeTokenProvider;
 import com.sencisobe.harbest.support.FakeUserRepository;
@@ -15,11 +17,13 @@ public class LoginUserTest {
 
     private final FakeUserRepository users = new FakeUserRepository();
     private final FakePasswordHasher hasher = new FakePasswordHasher();
-    private final LoginUser loginUser = new LoginUser(users, hasher, new FakeTokenProvider());
+    private final FakeAuditLog audit = new FakeAuditLog();
+    private final LoginUser loginUser = new LoginUser(users, hasher, new FakeTokenProvider(), audit);
 
     @BeforeEach
     void setUp() {
-        new RegisterUser(users, hasher).execute("a@x.com", "ana", "12345678");
+        new RegisterUser(users, hasher, audit).execute("a@x.com", "ana", "12345678");
+        audit.events.clear(); // descarta el evento REGISTER del setUp
     }
 
     @Test
@@ -31,6 +35,12 @@ public class LoginUserTest {
     void returnsTokenWithUsername() {
         assertEquals("token-1", loginUser.execute("ana", "12345678").token());
     }
+
+    @Test
+    void returnsUsernameInResult() {
+        assertEquals("ana", loginUser.execute("a@x.com", "12345678").username());
+    }
+
     @Test
     void loginIgnoresCaseAndSpaces() {
         assertEquals("token-1", loginUser.execute("  ANA ", "12345678").token());
@@ -59,5 +69,24 @@ public class LoginUserTest {
     void rejectsUnknownUsernameWithSameException() {
         assertThrows(InvalidCredentialsException.class,
                 () -> loginUser.execute("nadie", "12345678"));
+    }
+
+    @Test
+    void recordsLoginOkWithUserId() {
+        loginUser.execute("ana", "12345678");
+
+        assertEquals(1, audit.events.size());
+        assertEquals("LOGIN_OK", audit.events.get(0).action());
+        assertEquals(1L, audit.events.get(0).userId());
+    }
+
+    @Test
+    void recordsLoginFailedWithoutUserId() {
+        assertThrows(InvalidCredentialsException.class,
+                () -> loginUser.execute("ana", "incorrecta"));
+
+        assertEquals(1, audit.events.size());
+        assertEquals("LOGIN_FAILED", audit.events.get(0).action());
+        assertNull(audit.events.get(0).userId());
     }
 }
