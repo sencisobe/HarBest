@@ -23,6 +23,10 @@ public class UserRepositoryImpl implements UserRepository {
         entity.setId(user.getId());
         return toDomain(jpaRepository.save(entity));
     }
+        @Override
+    public Optional<User> findById(Long id) {
+        return jpaRepository.findById(id).map(this::toDomain);
+    }
 
     @Override
     public Optional<User> findByEmail(String email) {

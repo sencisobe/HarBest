@@ -6,6 +6,7 @@ import com.sencisobe.harbest.domain.exception.EmailAlreadyUsedException;
 import com.sencisobe.harbest.domain.exception.HabitNotFoundException;
 import com.sencisobe.harbest.domain.exception.InvalidCredentialsException;
 import com.sencisobe.harbest.domain.exception.InvalidHabitDataException;
+import com.sencisobe.harbest.domain.exception.InvalidResetTokenException;
 import com.sencisobe.harbest.domain.exception.InvalidWaterDataException;
 import com.sencisobe.harbest.domain.exception.UsernameAlreadyUsedException;
 
@@ -47,6 +48,11 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleUsernameAlreadyUsed(UsernameAlreadyUsedException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     }
+        @ExceptionHandler(InvalidResetTokenException.class)
+    public ProblemDetail handleInvalidResetToken(InvalidResetTokenException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+    
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex) {
         String sMessage = ex.getBindingResult().getFieldErrors().stream()

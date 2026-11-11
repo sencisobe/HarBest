@@ -26,6 +26,10 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public void changePasswordHash(String newHash) {
+    this.passwordHash = newHash;
+    }
+
     public Long getId() { return id; }
     public String getUsername() {return username; }
     public String getEmail() { return email; }

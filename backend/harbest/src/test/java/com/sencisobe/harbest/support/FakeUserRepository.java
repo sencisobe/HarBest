@@ -16,9 +16,14 @@ public class FakeUserRepository implements UserRepository {
     @Override
     public User save(User user) {
         Long id = user.getId() != null ? user.getId() : sequence.getAndIncrement();
-        User saved = new User(id, user.getEmail(),user.getUsername(), user.getPasswordHash(), user.getCreatedAt());
+        User saved = new User(id, user.getEmail(), user.getUsername(), user.getPasswordHash(), user.getCreatedAt());
         store.put(id, saved);
         return saved;
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     @Override
@@ -27,15 +32,13 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return findByEmail(email).isPresent();
+    public Optional<User> findByUsername(String username) {
+        return store.values().stream().filter(u -> u.getUsername().equals(username)).findFirst();
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
-        return store.values().stream()
-                .filter(u -> u.getUsername().equals(username))
-                .findFirst();
+    public boolean existsByEmail(String email) {
+        return findByEmail(email).isPresent();
     }
 
     @Override
