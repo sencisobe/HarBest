@@ -23,6 +23,10 @@ El usuario debe marcarsele en el menu si tiene algun habito por realizar en el d
 
 ¿El usuario debería poder cambiar el tiempo objetivo diario???
 
+Día 6/11
+
+-> Error (inconsistencia) si se marcan los campos de inicio de sesion (ambos rellenados)
+
 -------------TO BE DONE A DIA 16/10
 
 El usuario debe tener funciones nuevas cuando llega a una fase nueva (pensarlo)
