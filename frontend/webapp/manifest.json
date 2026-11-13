@@ -90,7 +90,18 @@
 					"pattern": "register", 
 					"name": "register", 
 					"target": "register" 
+				},
+				{ 	
+					"pattern": "forgot-password", 
+					"name": "forgotPassword", 
+					"target": "forgotPassword" 
+				},
+				{ 	
+					"pattern": "reset-password", 
+					"name": "resetPassword", 
+					"target": "resetPassword" 
 				}
+
 			],
 			"targets": {
 				"main": {
@@ -108,6 +119,14 @@
 				"register": {
 					"id": "register",
 					"name": "Register"
+				},
+				"forgotPassword": { 
+					"id": "forgotPassword", 
+					"name": "ForgotPassword" 
+				},
+				"resetPassword": { 
+					"id": "resetPassword",
+					"name": "ResetPassword" 
 				}
 			}
 		}

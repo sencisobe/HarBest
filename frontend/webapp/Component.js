@@ -23,7 +23,7 @@ sap.ui.define([
 				this._oBundle = oBundle;
 			});
 			const router = this.getRouter();
-			const PUBLIC = ["#/login", "#/register"];
+			const PUBLIC = ["#/login", "#/register", "#/forgot-password", "#/reset-password"];
 
 			if (!AuthService.getToken() && !PUBLIC.includes(window.location.hash)) {
 				window.location.hash = "#/login";

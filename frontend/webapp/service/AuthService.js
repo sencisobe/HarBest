@@ -37,6 +37,10 @@ sap.ui.define([], function () {
 		async register(username, email, password) {
 			await post("/auth/register", { username, email, password });
 			await this.login(username, password);
-		}
+		},
+
+		forgotPassword: (identifier) => post("/auth/forgot-password", { identifier }),
+
+		resetPassword: (token, newPassword) => post("/auth/reset-password", { token, newPassword })
 	};
 });

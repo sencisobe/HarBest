@@ -8,6 +8,7 @@
 
 			<Button text="{i18n>loginButton}" type="Emphasized" press=".onLogin" />
 			<Link text="{i18n>login2Register}" press=".onGoRegister" />
+			<Link text="{i18n>loginForgot}" press=".onGoForgot" />
 		</VBox>
 	</Page>
 </mvc:View>

@@ -34,6 +34,9 @@ function (BaseController, MessageToast, AuthService) {
 	},
 		onGoRegister: function () {
 			this.getRouter().navTo("register");
+		},
+		onGoForgot: function () {
+			this.getRouter().navTo("forgotPassword");
 		}
 	});
 });
