@@ -118,8 +118,6 @@ server.port=8081
 jwt.secret=YOUR_SUPER_SECRET_KEY_AT_LEAST_256_BITS
 jwt.expiration=86400000
 ```
-*(Tip: It is recommended to keep an `application.properties.example` in the repository for reference).*
-
 Then run:
 
 ```bash
