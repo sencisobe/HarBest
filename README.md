@@ -16,12 +16,8 @@ A habit tracker where every habit is a sprout in your garden. You "water" it wit
 ## Screenshots
 
 <p align="center">
-  <img src="docs/images/watering-habit.gif" width="48%" alt="Watering a habit">
-  <img src="docs/images/weekly-progress.png" width="48%" alt="Weekly progress view">
-</p>
-<p align="center">
-  <em>(Sustituye las rutas por tus imágenes reales. Un GIF mostrando cómo sube la barra al "regar" el hábito queda genial aquí, junto con una vista de la gráfica semanal o la pantalla de login).</em>
-</p>
+  <img src="frontend\webapp\images\harbest main.png" width="48%" alt="Watering a habit">
+</p>>>
 
 ## Tech stack
 
